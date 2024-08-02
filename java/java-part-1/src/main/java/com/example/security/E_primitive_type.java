@@ -1,4 +1,4 @@
-package com.example.study;
+package com.example.security;
 
 public class E_primitive_type {
 }

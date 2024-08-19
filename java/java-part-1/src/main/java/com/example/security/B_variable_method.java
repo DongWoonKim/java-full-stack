@@ -41,9 +41,9 @@ package com.example.security;
 
 // * 리터럴(Literal) : 변수에 담긴 값을 리터럴이라고 부른다.
 
-public class B_variable {
-    public static void main(String[] args) {
+public class B_variable_method {
 
+    public static void exam1() {
         // 변수
         byte myByte = 127;
         System.out.println(myByte);
@@ -81,5 +81,36 @@ public class B_variable {
         // 문자열
         String myStr = "Hello World!";
         System.out.println(myStr);
+    }
+
+    // * 함수 : 프로그래밍에서 특정 작업을 수행하기 위해 작성된 코드의 묶음
+    /*
+        1. 함수 선언 : 함수의 이름과 특성을 정의하는 부분이다.
+
+        2. 매개변수(Parameters) : 매개변수는 함수가 작업을 수행하는 데 필요한 입력값을 전달받는 부분이다.
+
+        3. 반환 타입(Return Type) : 함수가 어떤 유형의 값을 반환할지를 정의.
+     */
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static int minus(int a, int b) {
+        return a - b;
+    }
+
+    // * return
+    // 1. 값을 반환 : 함수가 어떤 값을 계산하거나 처리한 후, 그 결과를 호출한 코드로 돌려줄 때 사용된다.
+    // 2. 함수 종료 : return 문이 실행되면, 해당 함수는 즉시 종료된다.
+    public static void printResult(int result) {
+        System.out.println(result);
+        return;
+    }
+
+
+
+    public static void main(String[] args) {
+
+
     }
 }

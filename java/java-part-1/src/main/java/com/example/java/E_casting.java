@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 형변환
 // 변수 또는 상수의 타입을 다른 타입으로 변환하는 것.

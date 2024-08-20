@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 진법
 // 컴퓨터는 2진수(0과 1)밖에 모르기  때문에 2진수로 바뀌어 저장된다.

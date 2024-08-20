@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 배열
 // 같은 타입의 여러 변수를 하나의 묶음으로 다루는 것.

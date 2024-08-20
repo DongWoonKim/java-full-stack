@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 import java.util.Scanner;
 

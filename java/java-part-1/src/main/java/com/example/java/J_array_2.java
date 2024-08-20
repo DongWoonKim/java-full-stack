@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 다차원 배열
 // * 2차원 배열

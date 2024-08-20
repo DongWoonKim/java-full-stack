@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 변수 : 값을 저장활 수 있는 메모리상의 공간
 // 변수 타입 : 변수에 저장될 값이 어떤 타입인지를 지정하는 것.

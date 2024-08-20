@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 연산자
 // - 산술 연산자 : +, -, *, /, %

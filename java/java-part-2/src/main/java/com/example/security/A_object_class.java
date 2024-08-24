@@ -72,5 +72,8 @@ public class A_object_class {
         tv.power();
         tv.volumeUp();
         tv.channelDown();
+
+        TV[] tvs = new TV[10];
+
     }
 }

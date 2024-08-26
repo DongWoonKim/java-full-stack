@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 상속
 // 하나의 클래스가 다른 클래스의 속성과 메서드를 물려받아 사용하는 것을 의미합니다.

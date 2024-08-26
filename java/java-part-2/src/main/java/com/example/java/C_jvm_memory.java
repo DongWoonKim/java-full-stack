@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * JVM의 메모리 구조
 // 1. 메서드 영역(method area)

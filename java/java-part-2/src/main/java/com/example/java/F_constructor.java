@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 생성자(Constructor)
 // 객체가 생성될 때 호출되는 특수한 메서드입니다.

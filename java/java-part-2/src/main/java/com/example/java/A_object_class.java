@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 객체지향 프로그래밍(Object-Oriented Programming, OOP)
 // 프로그램을 여러 개의 객체(Object)로 나누어 작성하는 방법을 말한다.

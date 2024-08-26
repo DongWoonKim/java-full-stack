@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 정적메서드
 // 클래스 메서드는 자바에서 static 키워드로 선언된 메서드를 의미하며, 이는 정적 메서드라고도 불립니다.

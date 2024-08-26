@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 변수와 메서드
 // 1. 인스턴스변수(Instance variable)

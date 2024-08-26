@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 오버로딩(Overloading)
 // 같은 이름의 메서드를 여러 개 정의할 수 있게 해주는 자바의 기능입니다.

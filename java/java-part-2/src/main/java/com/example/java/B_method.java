@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 메서드
 // 메서드는 특정 작업을 수행하는 일련의 문장들을 하나로 묶은 것.
@@ -25,7 +25,7 @@ package com.example.security;
 
 public class B_method {
     public static void main(String[] args) {
-        B_Calculator bCalculator = new B_Calculator();
+        B_calculator bCalculator = new B_calculator();
 
         System.out.println(bCalculator.add(1,2));
         System.out.println(bCalculator.minus(3, 2));

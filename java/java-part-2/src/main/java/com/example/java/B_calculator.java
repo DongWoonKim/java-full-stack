@@ -1,6 +1,6 @@
-package com.example.security;
+package com.example.java;
 
-public class B_Calculator {
+public class B_calculator {
 
     public int add(int a, int b) {
         return a + b;

@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 public class F_person3 {
     String name;

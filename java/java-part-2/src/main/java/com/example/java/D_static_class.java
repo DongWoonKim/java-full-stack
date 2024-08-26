@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 정적 클래스
 class OuterClass {

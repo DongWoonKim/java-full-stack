@@ -1,6 +1,7 @@
 package com.example.security;
 
-// * List는 순서가 있는 요소들의 컬렉션을 나타내는 인터페이스이다다.
+// * List
+// 순서가 있는 요소들의 컬렉션을 나타내는 인터페이스이다다.
 // List 인터페이스를 구현하는 대표적인 클래스에는 ArrayList, LinkedList, Vector 등이 있다.
 // List는 중복된 요소를 허용하며, 인덱스를 기반으로 요소에 접근할 수 있다.
 
@@ -23,10 +24,7 @@ package com.example.security;
 //	•	LinkedList는 노드 기반의 리스트로, 삽입/삭제가 빠르지만 인덱스를 통한 접근이 느립니다.
 //	•	Stack은 후입선출(LIFO) 구조를 가지며, 요소를 스택에 추가하고 제거하는 데 사용됩니다.
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class A_collections_list {
 
@@ -68,6 +66,36 @@ public class A_collections_list {
         // 리스트의 모든 요소 제거
         list.clear();
         System.out.println("List after clearing: " + list);  // 출력: []
+
+        // 순회 방법 1: for 루프 사용
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("Element at index " + i + ": " + list.get(i));
+        }
+
+        // 순회 방법 2: 향상된 for 루프 사용
+        for (String element : list) {
+            System.out.println("Element: " + element);
+        }
+
+        // 순회 방법 3: Iterator 사용
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            String element = iterator.next();
+            System.out.println("Element: " + element);
+        }
+
+        // 순회 방법 4: ListIterator 사용 (양방향 순회 가능)
+        ListIterator<String> listIterator = list.listIterator();
+        while (listIterator.hasNext()) {
+            String element = listIterator.next();
+            System.out.println("Element: " + element);
+        }
+
+        // 역방향 순회
+        while (listIterator.hasPrevious()) {
+            String element = listIterator.previous();
+            System.out.println("Element in reverse: " + element);
+        }
     }
 
     // 2. LinkedList
@@ -93,6 +121,37 @@ public class A_collections_list {
 
         String element = linkedList.get(0);
         System.out.println("Element at index 0: " + element);
+
+        // 순회 방법 1: for 루프 사용
+        for (int i = 0; i < linkedList.size(); i++) {
+            System.out.println("Element at index " + i + ": " + linkedList.get(i));
+        }
+
+        // 순회 방법 2: 향상된 for 루프 사용
+        for (String ele : linkedList) {
+            System.out.println("Element: " + ele);
+        }
+
+        // 순회 방법 3: Iterator 사용
+        Iterator<String> iterator = linkedList.iterator();
+        while (iterator.hasNext()) {
+            String ele = iterator.next();
+            System.out.println("Element: " + ele);
+        }
+
+        // 순회 방법 4: ListIterator 사용 (양방향 순회 가능)
+        ListIterator<String> listIterator = linkedList.listIterator();
+        while (listIterator.hasNext()) {
+            String ele = listIterator.next();
+            System.out.println("Element: " + ele);
+        }
+
+        // 역방향 순회
+        while (listIterator.hasPrevious()) {
+            String ele = listIterator.previous();
+            System.out.println("Element in reverse: " + ele);
+        }
+
     }
 
     // 3. Stack
@@ -117,6 +176,42 @@ public class A_collections_list {
         System.out.println("Top element after peek: " + peekElement);
 
         System.out.println("Is stack empty? " + stack.empty());
+
+        // 순회 방법 1: for 루프 사용
+        for (int i = 0; i < stack.size(); i++) {
+            System.out.println("Element at index " + i + ": " + stack.get(i));
+        }
+
+        // 순회 방법 2: 향상된 for 루프 사용
+        for (String element : stack) {
+            System.out.println("Element: " + element);
+        }
+
+        // 순회 방법 3: Iterator 사용
+        Iterator<String> iterator = stack.iterator();
+        while (iterator.hasNext()) {
+            String element = iterator.next();
+            System.out.println("Element: " + element);
+        }
+
+        // 순회 방법 4: ListIterator 사용 (양방향 순회 가능)
+        ListIterator<String> listIterator = stack.listIterator();
+        while (listIterator.hasNext()) {
+            String element = listIterator.next();
+            System.out.println("Element: " + element);
+        }
+
+        // 역방향 순회
+        while (listIterator.hasPrevious()) {
+            String element = listIterator.previous();
+            System.out.println("Element in reverse: " + element);
+        }
+
+        // 순회 방법 5: pop()을 사용한 순회 (스택의 특성 활용)
+        while (!stack.isEmpty()) {
+            String element = stack.pop();
+            System.out.println("Popped element: " + element);
+        }
     }
 
     public static void main(String[] args) {

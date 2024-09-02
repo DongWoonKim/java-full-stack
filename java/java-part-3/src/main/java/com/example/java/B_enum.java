@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * enum(열거형)
 // 자바에서 특정한 상수 집합을 정의하는 데 사용되는 특별한 데이터 타입이다.

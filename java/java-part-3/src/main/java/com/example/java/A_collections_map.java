@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * Map
 // 키와 값의 쌍을 저장하는 자료구조를 나타낸다.

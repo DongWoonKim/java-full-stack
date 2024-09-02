@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * 제네릭(Generic)
 // 자바에서 클래스, 인터페이스, 메서드를 정의할 때 사용할 데이터 타입을 지정하지 않고,

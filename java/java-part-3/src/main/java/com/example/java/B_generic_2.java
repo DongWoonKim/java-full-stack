@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 public class B_generic_2<T extends Number> {
 

@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * Queue
 // 먼저 삽입된 요소가 먼저 제거되는 선입선출(FIFO: First-In-First-Out) 구조를 따르는 자료구조이다.

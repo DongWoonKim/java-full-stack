@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * List
 // 순서가 있는 요소들의 컬렉션을 나타내는 인터페이스이다다.

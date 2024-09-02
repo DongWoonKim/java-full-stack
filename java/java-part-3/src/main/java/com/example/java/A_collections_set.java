@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 // * Set
 // 중복되지 않는 요소들의 집합을 나타냅니다.

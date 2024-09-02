@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.java;
 
 public enum B_day_2 {
     SUNDAY("Holiday"),

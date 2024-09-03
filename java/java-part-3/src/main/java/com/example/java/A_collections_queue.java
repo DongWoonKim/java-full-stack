@@ -130,7 +130,7 @@ public class A_collections_queue {
         });
     }
 
-    public void exam2_2() {
+    public static void exam2_2() {
         // 나이를 기준으로 오름차순 정렬하는 PriorityQueue
 //        Queue<A_person> priorityQueue = new PriorityQueue<>( Comparator.comparingInt(A_person::getAge) );
         Comparator<A_person> ageComparator = new Comparator<A_person>() {
@@ -151,6 +151,16 @@ public class A_collections_queue {
         priorityQueue.add(new A_person("Bob", 25));
         priorityQueue.add(new A_person("Charlie", 35));
         priorityQueue.add(new A_person("Dave", 20));
+
+
+        // 요소를 하나씩 꺼내면서 출력
+        while (!priorityQueue.isEmpty()) {
+            System.out.println("Element: " + priorityQueue.poll());
+        }
+
+        // PriorityQueue는 큐에서 요소를 꺼낼 때만 우선순위에 따라 요소를 반환합니다.
+        // 따라서, 내부적으로 유지되는 우선순위에 따라 큐에서 하나씩 꺼내면서 요소를 확인하는 것이 중요합니다.
+        // 반복문으로 순회할 때는 이 순서가 보장되지 않으므로, 반드시 poll()이나 remove()와 같은 메서드를 사용해 요소를 꺼내면서 확인해야 합니다.
     }
 
     public void exam2_3() {
@@ -200,7 +210,7 @@ public class A_collections_queue {
         }
     }
 
-    public void exam2_5() {
+    public static void exam2_5() {
         // 이름을 내림차순으로 정렬하는 Comparator를 익명 클래스로 구현
         Comparator<A_person> nameComparatorDesc = new Comparator<A_person>() {
             @Override
@@ -256,6 +266,6 @@ public class A_collections_queue {
     }
 
     public static void main(String[] args) {
-
+        exam2_2();
     }
 }

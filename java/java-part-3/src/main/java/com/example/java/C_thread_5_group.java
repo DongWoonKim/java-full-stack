@@ -1,6 +1,6 @@
 package com.example.java;
 
-public class D_input_output_stream {
+public class C_thread_5_group {
     public static void main(String[] args) {
 
     }

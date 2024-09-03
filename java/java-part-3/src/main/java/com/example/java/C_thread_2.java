@@ -15,5 +15,37 @@ package com.example.java;
 // 작업을 마친 스레드, 즉 run()의 수행이 종료된 스레드는 호출스택이 모두 비워지면서 이 스레드가 사용하던 호출스택은 사라진다.
 // main메서드의 작업을 수행하는 것도 스레드이며, 이를 main스레드 라고 한다.
 // main메서드가 수행을 마쳤다하더라도 다른 스레드가 아직 작업을 마치지 않은 상태라면 프로그램이 종료되지 않는다.
+class C_threadEx3 extends Thread {
+    @Override
+    public void run() {
+        System.out.println("th3 run~~~");
+        throwException();
+    }
+
+    public void throwException() {
+        try {
+            throw new Exception();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
 public class C_thread_2 {
+
+    public static void exam1() {
+        C_threadEx3 t = new C_threadEx3();
+        t.start(); // 스레드가 생성됨
+    }
+
+    public static void exam2() {
+        C_threadEx3 t = new C_threadEx3();
+        t.run(); // 스레드가 생성되지 않음
+    }
+
+    public static void main(String[] args) {
+        exam1();
+        System.out.println("exam1");
+    }
 }

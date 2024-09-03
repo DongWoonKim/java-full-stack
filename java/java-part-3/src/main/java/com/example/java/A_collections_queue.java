@@ -38,6 +38,58 @@ class A_person {
     }
 }
 
+// 1 ---- 2 ---- 6
+// \     / \     /
+//  \   /   4 - 5
+//   \ /   / \
+//    3 - 7 - 8 - 9
+
+// 1, 2
+// 1, 3
+// 2, 3
+// 2, 4
+// 2, 6
+// 3, 7
+// 4, 5
+// 4, 7
+// 4, 8
+// 5, 6
+// 7, 8
+// 8, 9
+class Graph {
+    private LinkedList<Integer>[] adjacencyList;
+
+    public Graph(int vertex) {
+        adjacencyList = new LinkedList[vertex + 1];
+
+        // 각 인접 리스트를 초기화
+        for (int i = 0; i < adjacencyList.length; i++) {
+            adjacencyList[i] = new LinkedList<>();
+        }
+    }
+
+    public LinkedList<Integer>[] getAdjacencyList() {
+        return adjacencyList;
+    }
+
+    // 간선 추가
+    public void addEdge(int v, int w) {
+        adjacencyList[v].add(w);
+        adjacencyList[w].add(v);
+    }
+
+    // 그래프 출력
+    public void printGraph() {
+        for (int i = 1; i < adjacencyList.length; i++) {
+            System.out.print("Vertex " + i + " : ");
+            for (Integer v : adjacencyList[i]) {
+                System.out.print(v + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
 public class A_collections_queue {
     // 1. LinkedList
     //	•	LinkedList는 Queue 인터페이스를 구현하므로, 큐로 사용할 수 있다.
@@ -265,7 +317,47 @@ public class A_collections_queue {
         System.out.println("Queue is empty: " + arrayDeque.isEmpty());  // 출력: true
     }
 
+    public static void exam4() {
+        boolean[] visited = new boolean[9 + 1];
+        Graph graph = new Graph(9);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(2, 6);
+        graph.addEdge(3, 7);
+        graph.addEdge(4, 5);
+        graph.addEdge(4, 7);
+        graph.addEdge(4, 8);
+        graph.addEdge(5, 6);
+        graph.addEdge(7, 8);
+        graph.addEdge(8, 9);
+
+        // BFS
+        int startVertex = 1;
+        Queue<Integer> queue = new LinkedList<>(); // 탐색할 정점을 담는 큐
+
+        visited[startVertex] = true;
+        queue.add(startVertex);
+
+        System.out.println("정점 " + startVertex + "에서 시작하는 BFS");
+
+        while (queue.size() != 0) {
+            int vertex = queue.poll(); // 큐에서 정점 추출
+            System.out.print(vertex + " ");
+
+            // 현재 정점의 인접 정점들 중 방문하지 않은 정점을 모두 큐에 추가
+            for (int adj : graph.getAdjacencyList()[vertex]) {
+                if (!visited[adj]) {
+                    visited[adj] = true;
+                    queue.add(adj);
+                }
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
-        exam2_2();
+        exam4();
     }
 }

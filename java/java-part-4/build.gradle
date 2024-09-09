@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.example.himedia'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // MySQL JDBC 드라이버 추가
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    // Spring JDBC 라이브러리 추가
+    implementation 'org.springframework:spring-jdbc:5.3.26'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}

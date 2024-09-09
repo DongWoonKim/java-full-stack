@@ -1,0 +1,307 @@
+데이터베이스 개념
+데이터베이스 : 구조화된 데이터의 집합
+- 여러 사람과 실시간으로 공유하여 사용
+- 효율적인 데이터 관리
+- 효율적인 데이터 검색
+- 일관성 있는 방법으로 데이터 관리
+- 데이터 누락 및 중복제거
+
+파일 시스템을 통한 데이터 관리
+서로다른 여러 응용 프로그램이 제공하는 기능에 맞게 필요한 데이터를 각각 저장하고 관리한다. 각 파일에 저장한 데이터는 서로 연관이 없고 중복 또는 누락이 발생할 수 있다.
+
+DBMS(Database Management System)를 통한 데이터베이스 관리 효율적인 데이터 관리 조건을 만족하며 서비스 제공의 효율성을 높이기 위해 데이터베이스 관리 시스템이 등장
+여러 목적으로 사용할 데이터의 접근, 관리 등의 업무를 DBMS가 전담하는 방식...DBMS는 자신이 관리하는 데이터베이스로 관련 작업을 수행하고 결과 값을 제공한다.
+여러 응용 프로그램이 하나의 통합된 데이터를 같은 방식으로 사용, 관리할 수 있으므로 데이터 누락이나 중복을 방지할 수 있다.
+
+데이터 모델
+컴퓨터에 데이터를 저장하는 방식을 정의해 놓은 개념이다.
+대표 데이터 모델로, 계층형, 네트워크형, **관계형, 객체 지향형 등이 있다.
+
+관계형 데이터베이스 => RDBMS
+
+SQL => Structure Query Language : RDBMS에서 데이터를 다루고 관리하는데 사용하는 데이터베이스 질의 언어이다.
+
+종류
+DQL(Data Query Language) : 
+ - RDBMS에 저장한 데이터를 원하는 방식으로 조회하는 명령어
+DML(Data Manipulation Language) :
+ - RDBMS 내 테이블의 데이터를 저장, 수정, 삭제 하는 명령어 
+DDL(Data Definition Language) :
+ - RDBMS 내 데이터 관리를 위해 테이블을 포함한 여러 객체를
+생성, 수정, 삭제 하는 명령어
+TCL(Transaction Control Language) :
+ - 트랜잭션 데이터의 영구 저장, 취소 등과 관련된 명령어
+DCL(Data Control Language) :
+ - 데이터 사용 권한과 관련되 명령어
+
+테이블 : 표 형태의 데이터 저장 공간 
+(행 = row , 열 = column )
+키(key) : 수많은 데이터를 구별할 수 있는 유일한 값. 하나의 테이블을 구성하는 여러 열 중에서 특별한 의미를 지닌 하나 또는 여러 열의 조합을 의미한다.
+(기본키 : Primary Key, 후보키 : Candidate Key, 외래키 Foreign Key, 복합키 : Composite Key)
+
+***EMP : 사원정보
+EMPNO : 사원번호
+ENAME : 사원이름
+JOB      : 사원직책
+MGR     : 직속 상관의 사원번호
+HIREDATE : 입사일
+SAL : 급여
+COMM : 인센티브
+DEPTNO : 부서번호
+
+***DEPT테이블 : 부서정보
+DPETNO : 부서번호
+DNAME : 부서이름
+LOC : 부서위치
+
+***SALGRAD테이블 : 연봉정보
+GRADE : 급여등급
+LOSAL : 급여 등급의 최소 급여액
+HISAL : 급여 등급의 최대 급여액
+
+EMP테이블 조회
+SELECT * FROM EMP;
+SELECT DEPTNO, ENAME, JOB FROM EMP;
+* DISTINCT : 중복제거
+SELECT DISTINCT deptno FROM EMP;
+* 특징 : 복합 중복제거....
+SELECT DISTINCT deptno, job FROM EMP;
+
+문제)EMP테이블에서 연봉 추출하시오.
+SELECT SAL FROM EMP;
+
+// 중복 상관없이 모두 출력
+SELECT ALL DEPTNO, JOB FROM EMP;
+SELECT DEPTNO, JOB FROM EMP;
+
+// 연산
+SELECT ENAME, SAL, SAL*12*COMM AS ANNSAL, COMM FROM EMP;
+
+// ORDER BY : 정렬
+여기저기 흩어져 있는 데이터를 특정 기준에 따라 가지런히 순서를 맞추는 것은 자원을 많이 사용하기 때문에 꼭 필요한 경우가 아니면 사용하지 말 것.
+SELECT * FROM EMP ORDER BY sal (ASC); // 오름차순
+SELECT * FROM EMP ORDER BY sal DESC; // 내림차순
+
+// 조건 : WHERE
+SELECT * FROM EMP WHERE DEPTNO = 30;
+실습 ) 사원번호가 7782인 사원 정보만 나오도록...
+SELECT * FROM EMP WHERE DEPTNO = 7782;
+SELECT * FROM EMP WHERE DEPTNO = 30 AND JOB ='SALESMAN';
+SELECT * FROM EMP WHERE DEPTNO = 30 OR JOB ='SALESMAN';
+실습) 부서번호가 20이거나 사원번호가 7782인 경우
+SELECT * FROM EMP WHERE DEPTNO = 20 OR EMPNO = 7782;
+실습 ) 부서번호가 20이면서 연봉이 1000보다 높은 직원을 구하시오...
+SELECT * FROM EMP WHERE DEPTNO = 20 AND SAL > 1000;
+
+select * from emp where sal * 12 = 36000;
+select * from emp where sal >= 3000;
+실습) 급여가 2500이상 직업이 ANALYST인 사원 정보만 출력.
+SELECT * FROM EMP WHERE SAL >= 2500 AND JOB = 'ANALYST';
+
+SELECT * FROM EMP WHERE ENAME >= 'F';
+
+실습) 연봉이 3000이 아닌 경우 정보 출력
+SELECT * FROM EMP WHERE SAL != 3000;
+SELECT * FROM EMP WHERE SAL <> 3000;
+SELECT * FROM EMP WHERE NOT SAL = 3000;
+SELECT * FROM EMP WHERE ^= 3000;
+
+SELECT * FROM EMP WHERE JOB = 'MANAGER' OR JOB = 'SALESMAN' OR JOB = 'CLERK';
+--동일표현
+SELECT * FROM EMP WHERE JOB IN ('MANAGER', 'SALSEMAN', 'CLERK');
+-- 반대
+SELECT * FROM EMP WHERE JOB NOT IN ('MANAGER', 'SALSEMAN', 'CLERK');
+
+실습)
+사원의 번호, 이름, 급여 부서 번호를 출력하시오.
+select empno, ename, sal, deptno from emp;
+실습)
+10번 부서의 모든 사원에게 급여의 13%를 보너스로 지불하기로 하였다. 이름, 급여, 보너스 금액, 부서번호를 출력하시오.
+select ename, sal, (sal * 0.13) as bonus, deptno from emp;
+
+실습)
+사원 번호 기준 각각 오름차순, 내림차순 하시오
+select * from emp order by empno asc; 
+select * from emp order by empno desc;
+실습)
+EMP테이블의 전체 열을 부서번호(오름차순)와 급여(내림 차순)으로 정렬하시오.
+select * from emp order by deptno asc, sal desc;
+
+* BETWEEN A AND B
+SELECT * FROM EMP WHERE SAL >= 2000 AND SAL <= 3000;
+-> SELECT * FROM EMP WHERE SAL BETWEEN 2000 AND 3000;
+-부정
+SELECT * FROM EMP WHERE SAL NOT BETWEEN 2000 AND 3000;
+
+* LIKE연산자와 와일드 카드
+LIKE : 이메일이나 게시판 제목 또는 내용 검색 기능처럼 일부 문자열이 포함된 데이터를 조회할 때 사용.
+*와일드 카드 ...
+ % : 길이와 상관없이 모든 문자 데이터를 의미
+ - 이름이 s로 끝나는 데이터 조회
+SELECT * FROM EMP WHERE ENAME LIKE '%S';
+ - 이름이 s로 시작는 데이터 조회
+SELECT * FROM EMP WHERE ENAME LIKE 'S%';
+ - 와일드 카드 사이의 문자(열)이 포함된 모든 데이터 추출
+SELECT * FROM EMP WHERE ENAME LIKE '%AM%';
+SELECT * FROM EMP WHERE ENAME NOT LIKE '%AM%';
+
+* IS NULL 연산자
+SELECT * FROM EMP WHERE COMM = NULL;
+// 데이터가 안나옴
+// NULL + 100 = NULL 즉 없음
+SELECT * FROM EMP WHERE COMM IS NULL;
+SELECT * FROM EMP WHERE COMM IS NOT NULL;
+
+SELECT * FROM EMP WHERE MGR IS NOT NULL;
+
+* 집합 연산 : 두 개 이상의 SELECT문의 결과 값을 연결할 때 사용
+주의점 : 열 개수와 각 열의 자료형이 순서별로 일치해야 한다.
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP 
+WHERE DEPTNO = 10
+UNION
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP
+WHERE DEPTNO = 20;
+
+* UNION 종류
+UNION : 연결된 SELECT 문의 결과 값을 합집합으로 묶어준다. 
+결과 값의 중복은 제거 된다.
+UNION ALL : 연결된 SELECT문의 결과 값을 합집합으로 묶어준다. 중복된 결과 값도 제거 없이 모두 출력한다.
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10 
+UNION
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10; 
+
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10 
+UNION ALL
+SELECT EMPNO, ENAME, SAL, DEPTNO FROM EMP WHERE DEPTNO = 10 ;
+
+* 대/소문자를 바꿔주는 UPPER, LOWER함수
+SELECT ENAME, UPPER(ENAME), LOWER(ENAME) FROM EMP;
+
+* 문자열 길이를 구하는 LENGTH함수
+SELECT ENAME, LENGTH(ENAME) FROM EMP;
+
+* 문자열 일부를 추출하는 SUBSTR함수
+-- SUBSTR(문자열 데이터, 시작위치, 추출길이)
+-- SUBSTR(문자열 데이터, 시작위치)
+SELECT JOB, SUBSTR(JOB, 1, 2), SUBSTR(JOB, 3, 2), SUBSTR(JOB, 5) FROM EMP;
+
+* 특정 문자를 다른 문자로 바꾸는 REPLACE함수
+-- REPLACE([문자열 데이터 또는 열 이름(필수)], [찾는 문자열(필수)], [대체할 문자(선택)])
+
+SELECT '010-1234-5678' AS REPLACE_BEFORE,
+REPLACE('010-1234-5678', '-', ' ') AS REPLACE_1,
+REPLACE('010-1234-5678', '-') AS REPLACE_2
+FROM DUAL;
+
+문제1) JOB이 CLERK인 데이터 조회
+SELECT * FROM EMP WHERE JOB = 'CLERK';
+문제2) SAL이 1000이상인 데이터 조회
+SELECT * FROM EMP WHERE SAL >= 1000;
+문제3) COMM이 NULL인 데이터만 조회
+SELECT * FROM EMP WHERE COMM IS NULL;
+문제4) COMM이 NULL이 아닌 데이터만 조회
+SELECT * FROM EMP WHERE COMM IS NOT NULL;
+문제5) 사원이름(ENAME)에서 'R'로 끝나는 데이터 조회
+SELECT * FROM EMP WHERE ENAME LIKE '%R';
+문제6) 이름이 m으로 시작, 부서 번호가 10인 사람 조회
+SELECT * FROM EMP WHERE ENAME LIKE 'm%' OR DEPTNO = 10;
+문제7) 연봉이 1000~2000인 데이터 BETWEEN 사용할 것
+SELECT * FROM EMP WHERE SAL BETWEEN 1000 AND 2000;
+문제8) 연봉이 1000~2000인 데이터 부등호 사용할 것
+SELECT * FROM EMP WHERE SAL >= 1000 AND SAL <= 2000;
+문제9) 연봉이 1000~2000인 데이터 IN 사용할 것
+SELECT * FROM EMP WHERE SAL IN (1000, 2000);
+문제10) 부서번호 중복제거
+SELECT DISTINCT DEPTNO FROM EMP; 
+문제11) 연봉순 정렬 각각 내림차순, 오름차순 
+SELECT * FROM EMP ORDER BY SAL DESC; 
+SELECT * FROM EMP ORDER BY SAL ASC;
+
+* 날짜 데이터를 다루는 날짜 함수
+SELECT SYSDATE AS NOW, 
+SYSDATE-1 AS YESTERDAY,
+SYSDATE+1 AS TOMORROW
+FROM DUAL;
+
+* 몇 개월 이후 날짜를 구하는 ADD_MONTHS 함수
+SELECT EMPNO, ENAME, HIEREDATE, ADD_MONTHS(HIREDATE, 120) AS WORK10YEAR
+FROM EMP;
+
+문제) 32년 (384일)이 되지 않은 사원 이름 출력
+SELECT ENAME FROM EMP
+WHERE ADD_MONTHS(HIREDATE, 384) > SYSDATE;
+
+* NVL 함수 : 데이터가 NULL이 아니면 그 데이터를 그대로 출력하고 NULL이면 사용자가 입력한 데이터 출력
+
+SELECT empno, ename, sal, comm, sal + comm, 
+NVL(COMM, 0), sal+NVL(comm, 0) 
+FROM EMP;
+
+NVL2('기준컬럼이', 'NULL이 아닌경우', 'NULL인 경우')
+SELECT EMPNO, ENAME, COMM,
+NVL2(COMM, 'O', 'X'),
+NVL2(COMM, SAL*12+COMM, SAL*12) AS ANNUAL
+FROM EMP;
+
+*SUM함수
+SELECT SUM(SAL) FROM EMP;
+*COUNT함수
+SELECT COUNT(*) FROM EMP;
+*MAX, MIN함수
+SELECT MAX(SAL) FROM EMP;
+SELECT MIN(SAL) FROM EMP;
+* AVG함수
+SELECT AVG(SAL) FROM EMP;
+
+문제)
+입사일이 (hiredate)'80-12-17'이상인 데이터 조회
+SELECT * FROM EMP WHERE HIREDATE >= '80-12-17';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

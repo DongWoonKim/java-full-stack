@@ -1,0 +1,66 @@
+﻿5.연습문제
+1. 급여가 1000이상인 사원들의 부서별 평균 급여를 출력하시오. 단, 부서별 평균 급여가 2000 이상인 부서만 출력하시오.. 
+SELECT
+DEPTNO, AVG(SAL)
+FROM EMP 
+WHERE SAL >= 1000
+GROUP BY DEPTNO
+HAVING AVG(SAL) >= 2000
+ORDER BY DEPTNO; 
+
+2. 각 부서별 같은업무(JOB)를 하는 사람의 인원수를 구해서
+부서번호, 업무(JOB), 인원수를 부서번호에 대해 오름차순 정렬하여 출력하시오. 
+SELECT
+DEPTNO, JOB, COUNT(*)
+FROM EMP
+GROUP BY DEPTNO, JOB
+ORDER BY DEPTNO ASC;
+
+
+3. 사원번호, 부서번호, 부서명을 출력하시오.
+단, 사원이 근무하지 않는 부서명도 같이 출력할 것.
+SELECT
+ E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME
+FROM EMP E, DEPT D
+WHERE E.DEPTNO(+) = D.DEPTNO;
+-> 표준으로 출력...
+SELECT
+ E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME
+FROM EMP E RIGHT OUTER JOIN DEPT D
+ON(E.DEPTNO = D.DEPTNO);
+
+4. 10번 부서에 대해 급여의 평균값, 최대/최소 값 인원수를 구하여 출력하시오.
+
+5. 각 부서별 같은 직무를 갖는 사원의 인원수를 구하여 부서번호, 직무, 인원수를 출력하시오.
+
+6. 사원들의 평균급여와 최고급여, 최저급여를 평균급여에 대해 오름차순으로 정렬하시오.
+
+7. EMP 와 DEPT테이블을 조인하여 모든 사원에 대해
+부서번호, 부서이름, 사원이름, 급여를 출력하시오.
+
+8. 이름이 'ALLEN'인 사원의 부서이름을 출력하시오.
+
+9. 'ALLEN'과 직무가 같은 사원의 이름, 부서, 급여, 부서위치를 출력하시오.
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

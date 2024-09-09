@@ -1,0 +1,144 @@
+** 조인(JOIN) : 두 개 이상의 테이블을 연결한 것.
+- FROM 절에 여러 테이블 선언하기
+-> SELECT * 
+FROM EMP, DEPT
+ORDER BY EMPNO;
+--> FROM절에 명시한 각 테이블을 구성하는 행이 모든 경우의 수로 조합되어 출력..... 정확도가 떨어진다.
+**A와 B테이블을 조인할 경우 A와 B를 정확히 연결해 주는 열이 하나 필요하다. 그렇지 않고 정확히 연결이 돼있지 않다면 필요없는 데이터까지 모두 조합되어 출력된다.
+
+** 조인종류
+- 등가 조인 : 테이블을 연결한 후 출력 행을 각 테이블의 특정 열에 일치한 데이터를 기준으로 선정하는 방식이다.
+내부조인(INNER JOIN) 또는 단순조인(SIMPLE JOIN)이라고 부르기도 한다.
+
+- 열 이름을 비교하는 조건식으로 조인하기
+SELECT EMP.EMPNO, EMP.ENAME, DEPT.DEPTNO, DEPT.DNAME 
+FROM EMP, DEPT
+WHERE
+EMP.DEPTNO = DEPT.DEPTNO
+ORDER BY EMPNO; 
+
+- 테이블 이름 별칭 사용하기
+SELECT 
+e.EMPNO, e.ENAME, d.DEPTNO, d.DNAME
+FROM EMP e, DEPT d
+WHERE e.DEPTNO = d.DEPTNO
+AND e.DEPTNO = 10
+ORDER BY e.EMPNO, d.DEPTNO;
+
+- WHERE 절에 조건 사용
+SELECT 
+	E.ENAME, D.DNAME, D.LOC
+FROM EMP E, DEPT D
+WHERE
+ E.DEPTNO = D.DEPTNO
+AND
+ E.SAL >= 2000
+ORDER BY E.DEPTNO DESC;
+
+- 비등가 조인
+SELECT E.EMPNO, E.ENAME, E.SAL, S.GRADE 
+FROM EMP E, SALGRADE S
+WHERE 
+	E.SAL BETWEEN S.LOSAL AND S.HISAL;
+- 자체 조인
+같은 테이블을 두 번 사용하여 자체 조인하기
+SELECT
+E1.EMPNO, E1.ENAME, E1.MGR,
+E2.EMPNO AS MGR_EMPNO,
+E2.ENAME AS MGR_ENAME
+FROM EMP E1, EMP E2
+WHERE E1.MGR = E2.EMPNO;
+==>해당 값이 NULL인 경우 출력하지 않음...
+
+** 표준 문법으로 배우는 조인
+- NATURAL JOIN : 두 테이블 이름과 자료형이 같은 열을 찾은 후 그 열을 기준으로 등가조인을 해주는 방식
+SELECT
+E.EMPNO, E.ENAME, D.DEPTNO, D.DNAME
+FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO;
+
+SELECT
+	E.EMPNO, E.ENAME, DEPTNO, D.DNAME 
+FROM 
+	EMP E NATURAL JOIN DEPT D;
+
+// 기존 등가 조인과 같지만 방식에 있어 차이가 있음
+// NATURAL JOIN을 사용할 때 DEPTNO열을 기준으로 자동 등가 조인됨...
+
+**JOIN ~ USING : using(DEPTNO) 사용할 컬럼을 명시........
+SELECT
+E.EMPNO, E.ENAME, DEPTNO, D.DNAME
+FROM EMP E JOIN DEPT D using(DEPTNO)
+WHERE E.SAL >= 3000
+ORDER BY DEPTNO, E.EMPNO;
+
+**JOIN ~ ON : ON(조인 조건식) -> 공통 컬럼도 구체적으로 지칭 해야 한다.
+SELECT 
+	E.EMPNO, E.ENAME,
+	D.DEPTNO, D.DNAME
+FROM EMP E JOIN DEPT D ON (E.DEPTNO = D.DEPTNO)
+WHERE E.SAL >= 3000
+ORDER BY D.DEPTNO, E.EMPNO;
+
+***OUTER JOIN
+ -- LEFT OUTER JOIN : (왼쪽) 왼쪽열을 기준으로 오른쪽 열의 데이터 존재 여부에 상관없이 출력
+SELECT
+E1.EMPNO, E1.ENAME, E1.MGR,
+E2.EMPNO AS MGR_EMPNO,
+E2.ENAME AS MGR_ENAME
+FROM EMP E1 LEFT OUTER JOIN EMP E2
+ON(E1.MGR = E2.EMPNO)
+ORDER BY E1.EMPNO; 
+
+ -- RIGHT OUTER JOIN : (오른쪽) 오른쪽 열을 기준으로 왼쪽 열 데이터와 상관없이 데이터를 출력
+SELECT
+E1.EMPNO, E1.ENAME, E1.MGR,
+E2.EMPNO AS MGR_EMPNO,
+E2.ENAME AS MGR_ENAME
+FROM EMP E1 RIGHT OUTER JOIN EMP E2
+ON(E1.MGR = E2.EMPNO)
+ORDER BY E1.EMPNO; 
+
+ -- FULL OUTER JOIN : LEFT JOIN과 RIGHT JOIN을 결합..
+SELECT
+E1.EMPNO, E1.ENAME, E1.MGR,
+E2.EMPNO AS MGR_EMPNO,
+E2.ENAME AS MGR_ENAME
+FROM EMP E1 FULL OUTER JOIN EMP E2
+ON(E1.MGR = E2.EMPNO)
+ORDER BY E1.EMPNO;
+
+실습) JOIN~USING 키워드를 사용할 것
+급여가 3000 이상이며, 직속상관이 반드시 있도록 출력
+SELECT
+E.EMPNO, E.ENAME, DEPTNO, D.DNAME
+FROM EMP E JOIN DEPT D USING(DEPTNO)
+WHERE E.SAL >= 3000
+AND E.MGR IS NOT NULL
+ORDER BY E.EMPNO;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

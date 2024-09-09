@@ -1,7 +1,7 @@
 import java.sql.*;
 
 /*
-CREATE DATABASE your_database_name
+CREATE DATABASE java_basic
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
  */

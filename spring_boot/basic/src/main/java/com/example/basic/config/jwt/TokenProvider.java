@@ -37,14 +37,14 @@ public class TokenProvider {
                 .setExpiration(expiry)
                 .setSubject(user.getEmail())
                 .claim("id", user.getId())
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecret())
+                    .setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token);
 
             return true;
@@ -78,7 +78,7 @@ public class TokenProvider {
 //        Key key = Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes()); // Secret을 Key 객체로 변환
 
         return Jwts.parserBuilder()
-                .setSigningKey(jwtProperties.getSecret()) // Key 객체 사용
+                .setSigningKey(jwtProperties.getSecretKey()) // Key 객체 사용
                 .build() // parserBuilder를 통해 빌드
                 .parseClaimsJws(token)
                 .getBody();

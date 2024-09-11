@@ -6,3 +6,6 @@ spring:
     username: root
     password: DongunKim91
     driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  issuer: gauri7891@gmail.com
+  secret_key: study_springboot

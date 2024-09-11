@@ -19,7 +19,6 @@ public class UserApiController {
 
     @PostMapping("/user")
     public String signUp(AddUserRequest request) {
-        System.out.println("request: " + request);
         userService.save(request);
         return "redirect:/login";
     }

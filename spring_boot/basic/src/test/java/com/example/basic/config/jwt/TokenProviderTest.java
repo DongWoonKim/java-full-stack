@@ -7,11 +7,14 @@ import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -84,6 +87,38 @@ class TokenProviderTest {
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @Test
+    void getAuthentication() {
+        // given
+        String userEmail = "gauri7891@gmail.com";
+        String token = JwtFactory.builder()
+                .subject(userEmail)
+                .build()
+                .createToken(jwtProperties);
+
+        // when
+        Authentication authentication = tokenProvider.getAuthentication(token);
+
+        // then
+        assertThat( ((UserDetails)authentication.getPrincipal()).getUsername() ).isEqualTo(userEmail);
+    }
+
+    @Test
+    void getUserId() {
+        // given
+        Long userId = 1L;
+        String token = JwtFactory.builder()
+                .claims(Map.of("id", userId))
+                .build()
+                .createToken(jwtProperties);
+
+        // when
+        Long userIdByToken = tokenProvider.getUserId(token);
+
+        // then
+        assertThat(userIdByToken).isEqualTo(userId);
     }
 
 }

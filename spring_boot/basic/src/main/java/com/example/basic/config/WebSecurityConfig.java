@@ -21,20 +21,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.time.Duration;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
 
-    @Bean
+//    @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
                 .requestMatchers(new AntPathRequestMatcher("/static/**"));
     }
 
-    @Bean
+//    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(
@@ -64,7 +64,7 @@ public class WebSecurityConfig {
     }
 
     // 로그인 성공 시 Access Token 및 Refresh Token 발급
-    @Bean
+//    @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return (request, response, authentication) -> {
             // 인증된 사용자 정보에서 CustomUserDetails 가져오기
@@ -103,7 +103,7 @@ public class WebSecurityConfig {
         };
     }
 
-    @Bean
+//    @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
@@ -112,7 +112,7 @@ public class WebSecurityConfig {
         return new ProviderManager(authProvider);
     }
 
-    @Bean
+//    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

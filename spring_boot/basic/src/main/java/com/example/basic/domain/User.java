@@ -25,10 +25,22 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
+    @Column(name = "role")
+    private String role;
+
     @Builder
-    public User(Long id, String email, String password) {
+    public User(Long id, String email, String password, String nickname) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
+    }
+
+    public User update(String nickname) {
+        this.nickname = nickname;
+        return this;
     }
 }

@@ -6,6 +6,14 @@ spring:
     username: root
     password: DongunKim91
     driver-class-name: com.mysql.cj.jdbc.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            scope:
+              - email
+              - profile
 jwt:
   issuer: gauri7891@gmail.com
   secret_key: eW91cl92ZXJ5X3NlY3VyZV9zZWNyZXRfa2V5X2Zvcl9oczI1Nl9hbGdvcml0aG0h

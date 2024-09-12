@@ -11,13 +11,15 @@ public class CustomUserDetails implements UserDetails {
     private Long id;
     private String email;
     private String password;
+    private String nickname;
     private Collection<? extends GrantedAuthority> authorities;
 
     @Builder
-    public CustomUserDetails(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(Long id, String email, String password, String nickname, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
         this.authorities = authorities;
     }
 

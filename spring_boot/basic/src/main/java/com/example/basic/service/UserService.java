@@ -23,9 +23,14 @@ public class UserService {
                 ).getId();
     }
 
-    public User findByEmail(Long userId) {
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public User findByEmail(String email) {
         return userRepository
-                .findById(userId)
+                .findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 

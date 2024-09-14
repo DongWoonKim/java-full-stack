@@ -12,6 +12,7 @@ public class ArticleViewResponse {
 
     private Long id;
     private String title;
+    private String author;
     private String content;
     private LocalDateTime createdAt;
 
@@ -20,5 +21,6 @@ public class ArticleViewResponse {
         this.title = article.getTitle();
         this.content = article.getContent();
         this.createdAt = article.getCreatedAt();
+        this.author = article.getAuthor();
     }
 }

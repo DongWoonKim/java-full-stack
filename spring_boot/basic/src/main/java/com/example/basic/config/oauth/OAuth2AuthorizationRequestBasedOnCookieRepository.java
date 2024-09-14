@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.util.WebUtils;
 
-public class Oauth2AuthorizationrequestBasedOnCookieRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
+public class OAuth2AuthorizationRequestBasedOnCookieRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
     private final static String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
     private final static int COOKIE_EXPIRE_SECONDS = 18000;
@@ -34,7 +34,7 @@ public class Oauth2AuthorizationrequestBasedOnCookieRepository implements Author
         return this.loadAuthorizationRequest(request);
     }
 
-    private void removeAuthorizationRequestCookies(HttpServletRequest request, HttpServletResponse response) {
+    public void removeAuthorizationRequestCookies(HttpServletRequest request, HttpServletResponse response) {
         CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
     }
 }

@@ -3,7 +3,7 @@ package com.example.basic.config;
 import com.example.basic.config.jwt.TokenProvider;
 import com.example.basic.config.oauth.OAuth2SuccessHandler;
 import com.example.basic.config.oauth.OAuth2UserCustomService;
-import com.example.basic.config.oauth.Oauth2AuthorizationrequestBasedOnCookieRepository;
+import com.example.basic.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.example.basic.repository.RefreshTokenRepository;
 import com.example.basic.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -84,8 +84,8 @@ public class WebOAuthSecurityConfig {
     }
 
     @Bean
-    public Oauth2AuthorizationrequestBasedOnCookieRepository oauth2AuthorizationrequestBasedOnCookieRepository() {
-        return new Oauth2AuthorizationrequestBasedOnCookieRepository();
+    public OAuth2AuthorizationRequestBasedOnCookieRepository oauth2AuthorizationrequestBasedOnCookieRepository() {
+        return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
     @Bean

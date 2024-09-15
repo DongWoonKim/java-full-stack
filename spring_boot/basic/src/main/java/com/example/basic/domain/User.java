@@ -32,11 +32,12 @@ public class User {
     private String role;
 
     @Builder
-    public User(Long id, String email, String password, String nickname) {
+    public User(Long id, String email, String password, String nickname, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.role = role;
     }
 
     public User update(String nickname) {

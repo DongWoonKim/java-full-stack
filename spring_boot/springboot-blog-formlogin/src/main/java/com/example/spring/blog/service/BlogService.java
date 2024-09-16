@@ -30,4 +30,11 @@ public class BlogService {
                 .collect(Collectors.toList());
     }
 
+    // 글 조회
+    public GetArticleResponse findById(Long id) {
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Not found : " + id))
+                .toGetArticleResponse();
+    }
+
 }

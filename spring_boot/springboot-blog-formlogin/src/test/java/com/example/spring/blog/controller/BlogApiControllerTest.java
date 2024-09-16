@@ -91,4 +91,28 @@ class BlogApiControllerTest {
 
     }
 
+    @Test
+    void getArticleById() throws Exception {
+        // given
+        final String url = "/api/articles";
+        final String title = "test title";
+        final String content = "test content";
+
+        Article saved = blogRepository.save(new Article(title, content));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+        Article article = blogRepository.findById(saved.getId()).orElseThrow(() -> new IllegalArgumentException("Not found"));
+        AssertionsForClassTypes.assertThat(article.getId()).isEqualTo(saved.getId());
+        AssertionsForClassTypes.assertThat(article.getTitle()).isEqualTo(title);
+        AssertionsForClassTypes.assertThat(article.getContent()).isEqualTo(content);
+    }
+
 }

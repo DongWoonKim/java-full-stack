@@ -20,6 +20,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class BlogApiControllerTest {
@@ -94,7 +96,7 @@ class BlogApiControllerTest {
     @Test
     void getArticleById() throws Exception {
         // given
-        final String url = "/api/articles";
+        final String url = "/api/articles/{id}";
         final String title = "test title";
         final String content = "test content";
 
@@ -102,7 +104,7 @@ class BlogApiControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.get(url)
+                MockMvcRequestBuilders.get(url, saved.getId())
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -113,6 +115,27 @@ class BlogApiControllerTest {
         AssertionsForClassTypes.assertThat(article.getId()).isEqualTo(saved.getId());
         AssertionsForClassTypes.assertThat(article.getTitle()).isEqualTo(title);
         AssertionsForClassTypes.assertThat(article.getContent()).isEqualTo(content);
+    }
+
+    @Test
+    void deleteArticleById() throws Exception {
+
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "test title";
+        final String content = "test content";
+
+        Article saved = blogRepository.save(new Article(title, content));
+
+        // when
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete(url, saved.getId())
+        ).andExpect( MockMvcResultMatchers.status().isOk() );
+
+        // then
+        List<Article> articles = blogRepository.findAll();
+        assertThat(articles).isEmpty();
+
     }
 
 }

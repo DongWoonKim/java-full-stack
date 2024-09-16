@@ -37,4 +37,9 @@ public class BlogService {
                 .toGetArticleResponse();
     }
 
+    // 글 삭제
+    public void deleteById(Long id) {
+        blogRepository.deleteById(id);
+    }
+
 }

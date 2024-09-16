@@ -1,6 +1,7 @@
 package com.example.spring.blog.domain;
 
 import com.example.spring.blog.dto.AddArticleResponse;
+import com.example.spring.blog.dto.GetArticleResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,6 +31,14 @@ public class Article {
 
     public AddArticleResponse toAddArticleResponse() {
         return AddArticleResponse.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .build();
+    }
+
+    public GetArticleResponse toGetArticleResponse() {
+        return GetArticleResponse.builder()
                 .id(id)
                 .title(title)
                 .content(content)

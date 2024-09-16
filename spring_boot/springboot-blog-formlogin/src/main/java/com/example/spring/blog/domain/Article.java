@@ -2,6 +2,7 @@ package com.example.spring.blog.domain;
 
 import com.example.spring.blog.dto.AddArticleResponse;
 import com.example.spring.blog.dto.GetArticleResponse;
+import com.example.spring.blog.dto.UpdateArticleResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,4 +46,15 @@ public class Article {
                 .build();
     }
 
+    public UpdateArticleResponse toUpdateArticleResponse() {
+        return UpdateArticleResponse.builder()
+                .title(title)
+                .content(content)
+                .build();
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

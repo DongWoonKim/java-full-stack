@@ -2,6 +2,7 @@ package com.example.spring.blog.controller;
 
 import com.example.spring.blog.domain.Article;
 import com.example.spring.blog.dto.AddArticleRequest;
+import com.example.spring.blog.dto.UpdateArticleRequest;
 import com.example.spring.blog.repository.BlogRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -136,6 +137,35 @@ class BlogApiControllerTest {
         List<Article> articles = blogRepository.findAll();
         assertThat(articles).isEmpty();
 
+    }
+
+    @Test
+    void updateArticleById() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "test title";
+        final String content = "test content";
+
+        Article saved = blogRepository.save(new Article(title, content));
+
+        final String newTitle = "new title";
+        final String newContent = "new content";
+
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.put(url, saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(request))
+        );
+
+        // then
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+        Article article = blogRepository.findById(saved.getId()).orElseThrow(() -> new IllegalArgumentException("Not found"));
+
+        AssertionsForClassTypes.assertThat(article.getId()).isEqualTo(saved.getId());
+        AssertionsForClassTypes.assertThat(article.getTitle()).isEqualTo(newTitle);
+        AssertionsForClassTypes.assertThat(article.getContent()).isEqualTo(newContent);
     }
 
 }

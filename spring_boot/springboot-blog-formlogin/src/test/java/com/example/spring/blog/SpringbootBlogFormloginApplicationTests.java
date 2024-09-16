@@ -1,4 +1,4 @@
-package com.example.spring.springbootblogformlogin;
+package com.example.spring.blog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

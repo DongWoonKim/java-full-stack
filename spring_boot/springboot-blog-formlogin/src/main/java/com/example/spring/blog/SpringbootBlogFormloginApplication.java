@@ -1,4 +1,4 @@
-package com.example.spring.springbootblogformlogin;
+package com.example.spring.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

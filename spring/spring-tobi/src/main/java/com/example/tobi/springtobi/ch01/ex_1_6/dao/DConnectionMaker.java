@@ -9,7 +9,7 @@ public class DConnectionMaker implements ConnectionMaker {
     public Connection makeNewConnection() throws ClassNotFoundException, SQLException {
         String URL = "jdbc:mysql://localhost:3306/tobi"; // 데이터베이스 URL
         String USER = "root"; // 데이터베이스 사용자 이름
-        String PASSWORD = "1234"; // 데이터베이스 비밀번호
+        String PASSWORD = "DongunKim91"; // 데이터베이스 비밀번호
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 

@@ -18,9 +18,9 @@ public class SpringTobi01Application {
         ApplicationContext context = new AnnotationConfigApplicationContext(CountingDaoFactory.class);
 
         UserDao dao = context.getBean("userDao", UserDao.class);
-        dao.get("tobi");
-        dao.get("tobi");
-        dao.get("tobi");
+        dao.get("sdfa");
+        dao.get("sdfa");
+        dao.get("sdfa");
 
 
         CountingConnectionMaker connectionMaker = context.getBean("connectionMaker", CountingConnectionMaker.class);

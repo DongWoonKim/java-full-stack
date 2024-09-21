@@ -108,7 +108,7 @@ public class UserDao_v2 {
                 return ps;
             }
         };
-        
+
         jdbcContextWithStatementStrategy( strategy );
     }
 

@@ -100,7 +100,8 @@ public class UserDao_v1 {
         PreparedStatement ps = null;
         try {
             connection = dataSource.getConnection();
-//            ps = makePreparedStatement(connection); // 1. 메서드 추출방식...
+            // 1. 메서드 추출방식...
+//            ps = makePreparedStatement(connection);
 
             // 2. 전략 패턴 적용
             // - 한계점

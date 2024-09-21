@@ -17,18 +17,9 @@ public class UserDao_v2 {
         this.dataSource = dataSource;
     }
 
-    public void add(User user) throws ClassNotFoundException, SQLException {
-
-        Connection conn = dataSource.getConnection();
-        PreparedStatement ps = conn.prepareStatement("insert into users(id, name, password) values(?,?,?)");
-
-        ps.setString(1, user.getId());
-        ps.setString(2, user.getName());
-        ps.setString(3, user.getPassword());
-        ps.executeUpdate();
-
-        ps.close();
-        conn.close();
+    public void add(User user) {
+        StatementStrategy strategy = new AddStatement(user);
+        jdbcContextWithStatementStrategy( strategy );
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
@@ -95,7 +86,7 @@ public class UserDao_v2 {
 
     }
 
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         StatementStrategy strategy = new DeleteAllStatement();
         jdbcContextWithStatementStrategy( strategy );
     }

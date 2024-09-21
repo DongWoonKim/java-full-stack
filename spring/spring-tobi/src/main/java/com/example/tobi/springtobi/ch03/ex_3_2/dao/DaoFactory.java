@@ -9,9 +9,14 @@ import javax.sql.DataSource;
 @Configuration
 public class DaoFactory {
 
+//    @Bean
+//    public UserDao_v1 userDao() {
+//        return new UserDao_v1(dataSource());
+//    }
+
     @Bean
-    public UserDao_v1 userDao() {
-        return new UserDao_v1(dataSource());
+    public UserDao_v2 userDao() {
+        return new UserDao_v2(dataSource());
     }
 
     @Bean

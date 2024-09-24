@@ -1,19 +1,19 @@
-package com.example.tobi.springtobi.ch05.ex_5_1.service;
+package com.example.tobi.springtobi.ch05.ex_5_2.service;
 
-import com.example.tobi.springtobi.ch05.ex_5_1.dao.UserDao;
-import com.example.tobi.springtobi.ch05.ex_5_1.domain.Level;
-import com.example.tobi.springtobi.ch05.ex_5_1.domain.User;
+import com.example.tobi.springtobi.ch05.ex_5_2.dao.UserDao;
+import com.example.tobi.springtobi.ch05.ex_5_2.domain.Level;
+import com.example.tobi.springtobi.ch05.ex_5_2.domain.User;
 
 import java.util.List;
 
-public class UserService_v2 {
+public class UserService {
 
     public static final int MIN_LOGCOUNT_FOR_SIVER = 50;
     public static final int MIN_LOGCOUNT_FOR_GOLD = 30;
 
     private UserDao userDao;
 
-    public UserService_v2(UserDao userDao) {
+    public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 

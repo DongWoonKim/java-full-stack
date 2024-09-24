@@ -1,6 +1,6 @@
 package com.example.tobi.springtobi.ch05.ex_5_1.dao;
 
-import com.example.tobi.springtobi.ch05.ex_5_1.service.UserService;
+import com.example.tobi.springtobi.ch05.ex_5_1.service.UserService_v2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
@@ -16,8 +16,8 @@ public class DaoFactory {
     }
 
     @Bean
-    public UserService userService() {
-        return new UserService(userDao());
+    public UserService_v2 userService() {
+        return new UserService_v2(userDao());
     }
 
     @Bean

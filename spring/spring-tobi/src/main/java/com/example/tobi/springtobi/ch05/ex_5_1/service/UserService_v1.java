@@ -6,11 +6,11 @@ import com.example.tobi.springtobi.ch05.ex_5_1.domain.User;
 
 import java.util.List;
 
-public class UserService {
+public class UserService_v1 {
 
     private UserDao userDao;
 
-    public UserService(UserDao userDao) {
+    public UserService_v1(UserDao userDao) {
         this.userDao = userDao;
     }
 

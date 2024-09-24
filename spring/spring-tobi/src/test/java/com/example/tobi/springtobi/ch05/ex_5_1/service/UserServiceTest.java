@@ -23,7 +23,7 @@ class UserServiceTest {
     @Autowired
     private UserDao userDao;
     @Autowired
-    private UserService userService;
+    private UserService_v2 userService;
     List<User> users;
 
     @BeforeEach

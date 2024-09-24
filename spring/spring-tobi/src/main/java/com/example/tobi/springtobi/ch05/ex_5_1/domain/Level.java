@@ -2,18 +2,24 @@ package com.example.tobi.springtobi.ch05.ex_5_1.domain;
 
 public enum Level {
 
-    BASIC(1),
-    SILVER(2),
-    GOLD(3);
+    GOLD(3, null),
+    SILVER(2, GOLD),
+    BASIC(1, SILVER);
 
     private final int value;
+    private final Level level;
 
-    Level(int value) {
+    Level(int value, Level level) {
         this.value = value;
+        this.level = level;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public Level nextLevel() {
+        return level;
     }
 
     public static Level valueOf(int value) {

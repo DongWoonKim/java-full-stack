@@ -3,7 +3,11 @@ package com.example.tobi.springtobi.ch05.ex_5_2.service;
 import com.example.tobi.springtobi.ch05.ex_5_2.dao.UserDao;
 import com.example.tobi.springtobi.ch05.ex_5_2.domain.Level;
 import com.example.tobi.springtobi.ch05.ex_5_2.domain.User;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.sql.DataSource;
@@ -18,6 +22,7 @@ public class UserService {
 
     private UserDao userDao;
     private DataSource dataSource;
+    private PlatformTransactionManager transactionManager;
 
     public UserDao getUserDao() {
         return userDao;
@@ -29,6 +34,10 @@ public class UserService {
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
     }
 
     public UserService(String id) {}
@@ -73,6 +82,44 @@ public class UserService {
             DataSourceUtils.releaseConnection(c, dataSource);
             TransactionSynchronizationManager.unbindResource(this.dataSource);
             TransactionSynchronizationManager.clearSynchronization();
+        }
+
+    }
+
+    public void upgradeLevelsV3() {
+
+        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            List<User> users = userDao.getAll();
+
+            for(User user : users) {
+                if (canUpgradeLevel(user)) upgradeLevel(user);
+            }
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
+        }
+
+    }
+
+    public void upgradeLevelsV4() {
+
+        TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            List<User> users = userDao.getAll();
+
+            for(User user : users) {
+                if (canUpgradeLevel(user)) upgradeLevel(user);
+            }
+
+            transactionManager.commit(status);
+        } catch (Exception e) {
+            transactionManager.rollback(status);
+            throw e;
         }
 
     }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -25,6 +26,9 @@ class UserServiceTest {
     private UserService userService;
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     List<User> users;
 
     @BeforeEach
@@ -74,6 +78,48 @@ class UserServiceTest {
         System.out.println(userDao.get("joytouch").getLevel());
         try {
             testUserService.upgradeLevelsV2();
+        } catch (Exception e) {}
+
+
+        System.out.println(userDao.get("joytouch").getLevel());
+    }
+
+    @Test
+    void upgradeAllOrNothing_v3() {
+        UserService testUserService = new UserService.TestUserService( users.get(3).getId() );
+        testUserService.setUserDao(this.userDao);
+        testUserService.setDataSource(dataSource);
+
+        userDao.deleteAll();
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradeLevelsV3();
+        } catch (Exception e) {}
+
+
+        System.out.println(userDao.get("joytouch").getLevel());
+    }
+
+    @Test
+    void upgradeAllOrNothing_v4() {
+        UserService testUserService = new UserService.TestUserService( users.get(3).getId() );
+        testUserService.setUserDao(this.userDao);
+        testUserService.setTransactionManager(transactionManager);
+
+        userDao.deleteAll();
+
+        for (User user : users) {
+            userDao.add(user);
+        }
+
+        System.out.println(userDao.get("joytouch").getLevel());
+        try {
+            testUserService.upgradeLevelsV4();
         } catch (Exception e) {}
 
 

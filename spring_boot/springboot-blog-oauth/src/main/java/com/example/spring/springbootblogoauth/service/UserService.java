@@ -1,7 +1,7 @@
 package com.example.spring.springbootblogoauth.service;
 
-import com.example.spring.blog.dto.AddUserRequest;
-import com.example.spring.blog.repository.UsersRepository;
+import com.example.spring.springbootblogoauth.dto.AddUserRequest;
+import com.example.spring.springbootblogoauth.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

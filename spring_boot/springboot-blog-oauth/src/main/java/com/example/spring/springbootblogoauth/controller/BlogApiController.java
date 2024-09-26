@@ -1,7 +1,7 @@
 package com.example.spring.springbootblogoauth.controller;
 
-import com.example.spring.blog.dto.*;
-import com.example.spring.blog.service.BlogService;
+import com.example.spring.springbootblogoauth.dto.*;
+import com.example.spring.springbootblogoauth.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

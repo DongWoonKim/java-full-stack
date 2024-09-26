@@ -1,6 +1,6 @@
 package com.example.spring.springbootblogoauth.domain;
 
-import com.example.spring.blog.config.security.CustomUserDetails;
+import com.example.spring.springbootblogoauth.config.security.CustomUserDetails;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

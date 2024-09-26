@@ -1,7 +1,7 @@
 package com.example.spring.springbootblogoauth.controller;
 
-import com.example.spring.blog.dto.AddUserRequest;
-import com.example.spring.blog.service.UserService;
+import com.example.spring.springbootblogoauth.dto.AddUserRequest;
+import com.example.spring.springbootblogoauth.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

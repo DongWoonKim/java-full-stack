@@ -1,7 +1,7 @@
 package com.example.spring.springbootblogoauth.controller;
 
-import com.example.spring.blog.dto.GetArticleResponse;
-import com.example.spring.blog.service.BlogService;
+import com.example.spring.springbootblogoauth.dto.GetArticleResponse;
+import com.example.spring.springbootblogoauth.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,8 +1,8 @@
 package com.example.spring.springbootblogoauth.service;
 
-import com.example.spring.blog.domain.Article;
-import com.example.spring.blog.dto.*;
-import com.example.spring.blog.repository.ArticleRepository;
+import com.example.spring.springbootblogoauth.domain.Article;
+import com.example.spring.springbootblogoauth.dto.*;
+import com.example.spring.springbootblogoauth.repository.ArticleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

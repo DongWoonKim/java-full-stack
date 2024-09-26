@@ -1,7 +1,7 @@
 package com.example.spring.springbootblogoauth.service;
 
-import com.example.spring.blog.config.security.CustomUserDetails;
-import com.example.spring.blog.repository.UsersRepository;
+import com.example.spring.springbootblogoauth.config.security.CustomUserDetails;
+import com.example.spring.springbootblogoauth.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

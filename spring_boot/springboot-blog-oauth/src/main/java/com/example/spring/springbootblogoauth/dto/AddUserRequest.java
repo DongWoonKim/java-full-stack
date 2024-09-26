@@ -1,6 +1,6 @@
 package com.example.spring.springbootblogoauth.dto;
 
-import com.example.spring.blog.domain.Users;
+import com.example.spring.springbootblogoauth.domain.Users;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

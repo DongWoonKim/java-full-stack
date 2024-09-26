@@ -1,8 +1,8 @@
 package com.example.spring.springbootblogoauth.domain;
 
-import com.example.spring.blog.dto.AddArticleResponse;
-import com.example.spring.blog.dto.GetArticleResponse;
-import com.example.spring.blog.dto.UpdateArticleResponse;
+import com.example.spring.springbootblogoauth.dto.AddArticleResponse;
+import com.example.spring.springbootblogoauth.dto.GetArticleResponse;
+import com.example.spring.springbootblogoauth.dto.UpdateArticleResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

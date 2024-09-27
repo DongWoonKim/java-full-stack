@@ -6,9 +6,8 @@ CREATE TABLE user (
                       password VARCHAR(100)
 );
 
-INSERT INTO user (name, email) VALUES
-('Alice', 'alice@example.com'),
-('Bob', 'bob@example.com'),
-('Charlie', 'charlie@example.com'),
-('David', 'david@example.com'),
-('Eve', 'eve@example.com');
+INSERT INTO user (name, email, userId, password) VALUES ('Alice', 'alice@example.com', 'alice123', 'password1');
+INSERT INTO user (name, email, userId, password) VALUES ('Bob', 'bob@example.com', 'bob456', 'password2');
+INSERT INTO user (name, email, userId, password) VALUES ('Charlie', 'charlie@example.com', 'charlie789', 'password3');
+INSERT INTO user (name, email, userId, password) VALUES ('David', 'david@example.com', 'david321', 'password4');
+INSERT INTO user (name, email, userId, password) VALUES ('Eve', 'eve@example.com', 'eve654', 'password5');

@@ -2,11 +2,14 @@ package com.example.spring.springbootv1.controller;
 
 import com.example.spring.springbootv1.model.User;
 import com.example.spring.springbootv1.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/users")
@@ -24,16 +27,21 @@ public class UserController {
         return "user-list";
     }
 
+    @GetMapping("/register")
+    public String signUp(Model model) {
+        return "sign-up";
+    }
+
     @GetMapping("/{id}")
     @ResponseBody
     public User getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping
-    @ResponseBody
-    public void createUser(@RequestBody User user) {
+    @PostMapping("/register")
+    public String createUser(@RequestBody User user) {
         userService.createUser(user);
+        return "redirect:/users";
     }
 
     @PutMapping("/{id}")

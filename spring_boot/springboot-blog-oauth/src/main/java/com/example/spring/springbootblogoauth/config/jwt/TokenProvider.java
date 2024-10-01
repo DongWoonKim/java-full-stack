@@ -24,7 +24,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    private JwtProperties jwtProperties;
+    private final JwtProperties jwtProperties;
 
     public String generateToken(Users user, Duration expiredAt) {
         Date now = new Date();
@@ -45,6 +45,7 @@ public class TokenProvider {
             return true;
         } catch (Exception e) {
             // 복호화 과정에서 에러가 나면 유효하지 않은 토큰
+            System.out.println("err : " + e.getMessage());
             return false;
         }
     }

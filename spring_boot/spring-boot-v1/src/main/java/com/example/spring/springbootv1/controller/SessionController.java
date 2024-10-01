@@ -18,6 +18,7 @@ public class SessionController {
         // 세션에 사용자 이름 저장
         session.setAttribute("username", username);
 
+
         return "redirect:/login"; // 로그인 페이지로 리다이렉트
     }
 

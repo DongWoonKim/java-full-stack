@@ -1,5 +1,6 @@
 package com.example.spring.springbootblogoauth.service;
 
+import com.example.spring.springbootblogoauth.domain.Users;
 import com.example.spring.springbootblogoauth.dto.AddUserRequest;
 import com.example.spring.springbootblogoauth.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ public class UserService {
     public Long save(AddUserRequest addUserRequest) {
         return usersRepository.save( addUserRequest.toUsers(bCryptPasswordEncoder) )
                 .getId();
+    }
+
+    public Users findById(Long id) {
+        return usersRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
 }

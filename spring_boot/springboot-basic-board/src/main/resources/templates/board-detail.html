@@ -26,9 +26,16 @@
         <p id="content">게시글 내용</p>
     </div>
 
+    <!-- 파일 미리보기 및 다운로드 영역 -->
+    <div class="file-section">
+        <h3>첨부 파일</h3>
+        <ul id="fileList">
+            <!-- 서버에서 파일 목록을 동적으로 추가 -->
+        </ul>
+    </div>
+
     <div class="article-footer">
         <button class="btn" th:onclick="|location.href='@{/}'|">목록으로 돌아가기</button>
-<!--        <button class="btn edit-btn" th:onclick="|location.href='@{/board/edit/{id}(id=${article.id})}'|">수정</button>-->
         <button id="editBtn" class="btn edit-btn">수정</button>
         <button id="deleteBtn" class="btn delete-btn">삭제</button>
     </div>

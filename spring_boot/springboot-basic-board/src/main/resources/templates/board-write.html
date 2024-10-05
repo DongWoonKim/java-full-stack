@@ -12,7 +12,6 @@
 <div class="container">
     <h1>글쓰기</h1>
 
-
     <form id="writeForm" enctype="multipart/form-data">
         <input id="hiddenUserId" name="hiddenUserId" type="hidden" th:value="${userId}">
         <input id="hiddenUserName" name="hiddenUserName" type="hidden" th:value="${userName}">
@@ -34,7 +33,12 @@
 
         <div class="form-group">
             <label for="file">파일 업로드</label>
-            <input type="file" id="file" name="file" multiple>
+            <input type="file" id="file" name="file">
+        </div>
+
+        <!-- 업로드된 파일을 보여주고, 취소할 수 있는 영역 -->
+        <div class="uploaded-files">
+            <ul id="fileList"></ul> <!-- 파일 목록을 보여줄 부분 -->
         </div>
 
         <div class="form-actions">
@@ -43,5 +47,6 @@
         </div>
     </form>
 </div>
+
 </body>
 </html>

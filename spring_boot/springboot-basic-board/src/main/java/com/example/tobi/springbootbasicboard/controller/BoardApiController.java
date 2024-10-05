@@ -1,5 +1,6 @@
 package com.example.tobi.springbootbasicboard.controller;
 
+import com.example.tobi.springbootbasicboard.dto.BoardDeleteRequestDTO;
 import com.example.tobi.springbootbasicboard.dto.BoardDetailResponseDTO;
 import com.example.tobi.springbootbasicboard.dto.BoardListResponseDTO;
 import com.example.tobi.springbootbasicboard.model.Board;
@@ -65,6 +66,15 @@ public class BoardApiController {
         boardService.saveArticle(userId, title, content, file);
         return ResponseEntity.ok()
                 .build() ;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteArticle(
+            @PathVariable Long id,
+            @RequestBody BoardDeleteRequestDTO request
+            ) {
+        boardService.deleteArticle(id, request);
+        return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
     }
 
     @GetMapping("/file/download/{fileName}")

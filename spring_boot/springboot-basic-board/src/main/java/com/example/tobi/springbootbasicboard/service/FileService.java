@@ -47,4 +47,15 @@ public class FileService {
             throw new RuntimeException("파일 다운로드 중 오류 발생", e);
         }
     }
+
+    // 파일 삭제 메서드
+    public boolean deleteFile(String filePath) {
+        try {
+            Path path = Paths.get(filePath);
+            return Files.deleteIfExists(path); // 파일이 존재하면 삭제
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

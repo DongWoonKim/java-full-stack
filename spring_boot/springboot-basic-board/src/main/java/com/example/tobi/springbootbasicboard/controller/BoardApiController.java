@@ -50,14 +50,12 @@ public class BoardApiController {
     }
 
     @PostMapping
-    public String handleFileUpload(@RequestParam("title") String title,
+    public String saveArticle(@RequestParam("title") String title,
                                    @RequestParam("hiddenUserId") String userId,
                                    @RequestParam("content") String content,
-                                   @RequestPart("file") MultipartFile[] files
+                                   @RequestPart("file") MultipartFile file
     ) {
-
-        System.out.println(title + " : " + userId + " : " + content);
-
+        boardService.saveArticle(userId, title, content, file);
         return null;
     }
 

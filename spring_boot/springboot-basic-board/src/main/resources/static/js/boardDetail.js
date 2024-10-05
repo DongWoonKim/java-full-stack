@@ -20,10 +20,6 @@ let loadBoardDetail = () => {
         type: 'GET',
         url: '/api/board/' + hId,
         success: (response) => {
-
-            console.log('res res :: ', response)
-            console.log('res res :: ', response.filePath)
-
             $('#title').text(response.title);
             $('#content').text(response.content);
             $('#userId').text(response.userId);

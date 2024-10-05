@@ -57,13 +57,14 @@ public class BoardApiController {
     }
 
     @PostMapping
-    public String saveArticle(@RequestParam("title") String title,
+    public ResponseEntity<Void> saveArticle(@RequestParam("title") String title,
                                    @RequestParam("hiddenUserId") String userId,
                                    @RequestParam("content") String content,
                                    @RequestPart("file") MultipartFile file
     ) {
         boardService.saveArticle(userId, title, content, file);
-        return null;
+        return ResponseEntity.ok()
+                .build() ;
     }
 
     @GetMapping("/file/download/{fileName}")

@@ -1,5 +1,6 @@
 package com.example.tobi.springbootbasicboard.config;
 
+import com.example.tobi.springbootbasicboard.config.security.CustomAuthenticationFailureHandler;
 import com.example.tobi.springbootbasicboard.config.security.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +19,15 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/static/**", "/css/**", "/js/**"); // 정적 리소스 경로 무시
+                .requestMatchers("/member/login", "/member/join","/static/**", "/css/**", "/js/**"); // 정적 리소스 경로 무시
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, CustomAuthenticationSuccessHandler successHandler) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            CustomAuthenticationSuccessHandler successHandler,
+            CustomAuthenticationFailureHandler failureHandler
+    ) throws Exception {
         return http
                 .authorizeHttpRequests(
                         auth -> auth
@@ -35,11 +40,15 @@ public class WebSecurityConfig {
                 )
                 .formLogin(
                         form -> form
-                                .loginPage("/login")
-                                .defaultSuccessUrl("/")
+                                .loginPage("/member/login") // 커스텀 로그인 페이지 경로 설정
+                                .loginProcessingUrl("/login") // 로그인 처리 경로 설정
                                 .successHandler(successHandler)
+                                .failureHandler(failureHandler)
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/member/logout"))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/member/login")
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }

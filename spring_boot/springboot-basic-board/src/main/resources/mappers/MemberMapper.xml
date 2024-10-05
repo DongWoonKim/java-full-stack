@@ -4,6 +4,7 @@
 <mapper namespace="com.example.tobi.springbootbasicboard.mapper.MemberMapper">
 
     <resultMap id="memberResultMap" type="com.example.tobi.springbootbasicboard.model.Member">
+        <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="userName" column="user_name"/>

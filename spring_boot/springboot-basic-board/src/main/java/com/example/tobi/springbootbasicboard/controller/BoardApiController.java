@@ -6,6 +6,7 @@ import com.example.tobi.springbootbasicboard.model.Board;
 import com.example.tobi.springbootbasicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,5 +48,18 @@ public class BoardApiController {
                 .userId(boardDetail.getUserId())
                 .build();
     }
+
+    @PostMapping
+    public String handleFileUpload(@RequestParam("title") String title,
+                                   @RequestParam("hiddenUserId") String userId,
+                                   @RequestParam("content") String content,
+                                   @RequestPart("file") MultipartFile[] files
+    ) {
+
+        System.out.println(title + " : " + userId + " : " + content);
+
+        return null;
+    }
+
 
 }

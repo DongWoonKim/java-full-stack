@@ -65,7 +65,22 @@ public class BoardApiController {
     ) {
         boardService.saveArticle(userId, title, content, file);
         return ResponseEntity.ok()
-                .build() ;
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updateArticle(
+            @RequestParam("hiddenId") Long id,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("hiddenFileFlag") Boolean fileChanged,
+            @RequestParam("hiddenFilePath") String filePath,
+            @RequestPart("file") MultipartFile file
+    ) {
+        System.out.println(id + ", " + title + ", " + content + ", " + fileChanged + ", " + filePath);
+        boardService.updateArticle(id, title, content, fileChanged, filePath, file);
+        return ResponseEntity.ok()
+                .build();
     }
 
     @DeleteMapping("/{id}")

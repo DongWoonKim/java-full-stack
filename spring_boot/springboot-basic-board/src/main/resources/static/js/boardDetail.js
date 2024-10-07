@@ -1,11 +1,14 @@
-
 $(document).ready(() => {
     checkSession();
     loadBoardDetail();
 });
 
-let deleteArticle = () => {
+let editArticle = () => {
+    let resourceId = $('#hiddenId').val();
+    window.location.href = '/update/'+ resourceId;
+}
 
+let deleteArticle = () => {
     let resourceId = $('#hiddenId').val();
     let filePath = $('#hiddenFilePath').val();
 

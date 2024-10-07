@@ -63,4 +63,26 @@ public class BoardService {
         boardMapper.deleteBoardById(id);
         fileService.deleteFile(request.getFilePath());
     }
+
+    public void updateArticle(Long id, String title, String content, Boolean fileChanged, String filePath, MultipartFile file) {
+        String path = null;
+        if (!file.isEmpty()) {
+            path = fileService.fileUpload(file);
+        }
+
+        if (fileChanged) {
+            fileService.deleteFile(filePath);
+        } else {
+            path = filePath;
+        }
+
+        boardMapper.updateArticle(
+                Board.builder()
+                        .id(id)
+                        .title(title)
+                        .content(content)
+                        .filePath(path)
+                        .build()
+        );
+    }
 }

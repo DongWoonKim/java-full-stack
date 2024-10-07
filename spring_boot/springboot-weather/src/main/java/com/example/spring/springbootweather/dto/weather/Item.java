@@ -1,4 +1,4 @@
-package com.example.spring.springbootweather.dto;
+package com.example.spring.springbootweather.dto.weather;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -5,3 +5,6 @@ weather:
   api:
     url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
     key: "//BR+zCubgCz24a1EjYnN+4OfbLU9YHnH8lNgz0ZBFXwQN1fRj0mdTfJAmSUH/rX8cf2xXqH9aeuwDyDe4jDaQ=="  # ??? API ?
+
+example-client:
+  url: "http://localhost:8083"

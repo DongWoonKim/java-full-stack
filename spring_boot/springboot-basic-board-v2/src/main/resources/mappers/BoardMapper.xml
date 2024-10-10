@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.spring.springbootbasicboard.mapper.BoardMapper">
+<mapper namespace="com.example.spring.springbootbasicboardv2.mapper.BoardMapper">
 
-    <resultMap id="boardResultMap" type="com.example.spring.springbootbasicboard.model.Board">
+    <resultMap id="boardResultMap" type="com.example.spring.springbootbasicboardv2.model.Board">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="title" column="title"/>
@@ -11,7 +11,7 @@
         <result property="filePath" column="file_path"/>
     </resultMap>
 
-    <insert id="saveArticle" parameterType="com.example.spring.springbootbasicboard.model.Board">
+    <insert id="saveArticle" parameterType="com.example.spring.springbootbasicboardv2.mapper.BoardMapper">
         INSERT INTO
             article (user_id, title, content, file_path)
         VALUES
@@ -19,7 +19,7 @@
     </insert>
 
     <select id="selectBoardList"
-            parameterType="com.example.spring.springbootbasicboard.model.Paging"
+            parameterType="com.example.spring.springbootbasicboardv2.model.Paging"
             resultMap="boardResultMap">
         SELECT
             *
@@ -44,7 +44,7 @@
             id = #{id};
     </select>
 
-    <update id="updateArticle" parameterType="com.example.spring.springbootbasicboard.model.Board">
+    <update id="updateArticle" parameterType="com.example.spring.springbootbasicboardv2.model.Board">
         UPDATE
             article
         SET

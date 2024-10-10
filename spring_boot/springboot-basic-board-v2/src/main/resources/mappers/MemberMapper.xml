@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.spring.springbootbasicboard.mapper.MemberMapper">
+<mapper namespace="com.example.spring.springbootbasicboardv2.mapper.MemberMapper">
 
-    <resultMap id="memberResultMap" type="com.example.spring.springbootbasicboard.model.Member">
+    <resultMap id="memberResultMap" type="com.example.spring.springbootbasicboardv2.model.Member">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="userName" column="user_name"/>
     </resultMap>
 
-    <insert id="signUp" parameterType="com.example.spring.springbootbasicboard.model.Member">
+    <insert id="signUp" parameterType="com.example.spring.springbootbasicboardv2.model.Member">
         INSERT INTO member (user_id, password, user_name)
         VALUES (#{userId}, #{password}, #{userName});
     </insert>

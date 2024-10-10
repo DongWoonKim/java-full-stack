@@ -63,3 +63,11 @@ input[type="submit"]:hover {
     font-size: 0.9em;
     margin-top: 5px;
 }
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}

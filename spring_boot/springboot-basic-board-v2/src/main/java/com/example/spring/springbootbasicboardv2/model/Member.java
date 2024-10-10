@@ -1,5 +1,6 @@
 package com.example.spring.springbootbasicboardv2.model;
 
+import com.example.spring.springbootbasicboardv2.enums.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,4 +13,5 @@ public class Member {
     private String userId;
     private String password;
     private String userName;
+    private Role role;
 }

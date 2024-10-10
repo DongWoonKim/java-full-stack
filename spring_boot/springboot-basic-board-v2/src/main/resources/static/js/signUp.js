@@ -1,18 +1,21 @@
 
 $(document).ready(() => {
 
-    $('#signup').click(() => {
+    $('#signup').click((event) => {
+
+        event.preventDefault(); // 폼의 기본 제출 동작을 막음
 
         let userId = $('#user_id').val();
         let password = $('#password').val();
         let userName = $('#user_name').val();
+        let role = $('#role').val(); // 역할 선택 값 가져오기
 
         let formData = {
-           userId : userId,
-           password : password,
-           userName : userName
-        }
-
+            userId: userId,
+            password: password,
+            userName: userName,
+            role: role // 역할 값 추가
+        };
 
         $.ajax({
             type: 'POST',
@@ -22,7 +25,7 @@ $(document).ready(() => {
             dataType: 'json', // 서버에서 받을 데이터의 타입
             success: function(response) {
                 // 성공 시 실행될 콜백 함수
-                alert('회원가입이 성공했습니다.\n로그인해주세요.')
+                alert('회원가입이 성공했습니다.\n로그인해주세요.');
                 // 성공 후 다른 페이지로 이동하거나 처리할 코드 작성 가능
                 window.location.href = response.url;
             },
@@ -33,8 +36,7 @@ $(document).ready(() => {
             }
         });
 
+
     });
-
-
 
 });

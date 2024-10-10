@@ -8,17 +8,22 @@
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="userName" column="user_name"/>
+        <result property="role" column="role"/>
     </resultMap>
 
     <insert id="signUp" parameterType="com.example.spring.springbootbasicboardv2.model.Member">
-        INSERT INTO member (user_id, password, user_name)
-        VALUES (#{userId}, #{password}, #{userName});
+        INSERT INTO member (user_id, password, user_name, role)
+        VALUES (#{userId}, #{password}, #{userName}, #{role});
     </insert>
 
     <select id="signIn"
             parameterType="String"
             resultMap="memberResultMap">
-        SELECT * FROM member WHERE user_id = #{userId};
+        SELECT
+            id, user_id, password, user_name, role
+        FROM
+            member
+        WHERE user_id = #{userId};
     </select>
 
 </mapper>

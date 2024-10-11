@@ -6,6 +6,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: DongunKim91
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "1093739303835-u0ktup6k3lmt75hnp8jtv7pbvk8ssb74.apps.googleusercontent.com"
+            client-secret: "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"
+            scope:
+              - email
+              - profile
 
 server:
   port: 8081

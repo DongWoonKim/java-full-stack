@@ -1,24 +1,21 @@
 package com.example.spring.springbootbasicboardv2.config.jwt;
 
+import com.example.spring.springbootbasicboardv2.enums.Role;
 import com.example.spring.springbootbasicboardv2.model.Member;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +32,7 @@ public class TokenProvider {
         );
     }
 
-    public boolean validToken(String token) {
+    public int validToken(String token) {
         try {
             Jwts.parserBuilder()
                     .setSigningKey( getSecretKey() ) // SecretKey 객체 사용
@@ -43,32 +40,31 @@ public class TokenProvider {
                     .parseClaimsJws(token)
                     .getBody();
 
-            return true;
+            return 1;
+        } catch (ExpiredJwtException e) {
+            // 토큰이 만료된 경우
+            System.out.println("Access Token이 만료되었습니다.");
+            return 2;
         } catch (Exception e) {
             // 복호화 과정에서 에러가 나면 유효하지 않은 토큰
             System.out.println("err : " + e.getMessage());
-            return false;
+            return 3;
         }
     }
 
     // 토큰 기반으로 인증 정보를 가져오는 메서드
     public Authentication getAuthentication(String token) {
         Claims claims = getClaims(token);
-        Set<SimpleGrantedAuthority> authorities = Collections.singleton(
-                new SimpleGrantedAuthority("ROLE_USER")
+        // Claims에서 역할을 추출하고, GrantedAuthority로 변환
+        List<GrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority( claims.get("role").toString() ) // 역할을 GrantedAuthority로 변환
         );
 
-        return new UsernamePasswordAuthenticationToken(
-                new User(claims.getSubject(), "", authorities),
-                token,
-                authorities
-        );
-    }
+        // UserDetails 객체 생성
+        UserDetails userDetails = new User(claims.getSubject(), "", authorities);
 
-    // 토큰 기반으로 user id를 가져오는 메서드
-    public Long getUserId(String token) {
-        Claims claims = getClaims(token);
-        return claims.get("id", Long.class);
+        // UsernamePasswordAuthenticationToken 생성
+        return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
     }
 
     public String getUsernameFromToken(String token) {
@@ -78,6 +74,21 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
+    }
+
+    // 토큰에서 Subject, id, role 값을 추출하는 메서드
+    public Member getTokenDetails(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())  // 서명 검증을 위한 비밀 키 설정
+                .build()
+                .parseClaimsJws(token)
+                .getBody();  // 토큰의 클레임(Claims)을 추출
+
+        return Member.builder()
+                .id(claims.get("id", Long.class))
+                .userId(claims.getSubject())
+                .role(Role.valueOf(claims.get("role", String.class)))
+                .build();
     }
 
     private String makeToken(Date expire, Member member) {
@@ -90,7 +101,7 @@ public class TokenProvider {
                 .setExpiration(expire)
                 .setSubject( member.getUserId() )
                 .claim("id", member.getId())
-                .claim("role", "ROLE_USER")
+                .claim("role", member.getRole().name())
                 .signWith(getSecretKey(), SignatureAlgorithm.HS512)
                 .compact();
     }

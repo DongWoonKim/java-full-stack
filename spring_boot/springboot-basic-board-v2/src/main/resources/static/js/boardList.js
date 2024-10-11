@@ -1,5 +1,15 @@
 
 $(document).ready(() => {
+    // 모든 Ajax 요청에 JWT Access Token을 포함
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            let token = localStorage.getItem('accessToken'); // 저장된 Access Token 가져오기
+            console.log('Access Token:', token);
+            if (token) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token); // Authorization 헤더에 Access Token 추가
+            }
+        }
+    });
     getBoards();
 });
 

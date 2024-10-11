@@ -8,6 +8,7 @@ import com.example.spring.springbootbasicboardv2.dto.SignUpRequestDTO;
 import com.example.spring.springbootbasicboardv2.dto.SignUpResponseDTO;
 import com.example.spring.springbootbasicboardv2.model.Member;
 import com.example.spring.springbootbasicboardv2.service.MemberService;
+import com.example.spring.springbootbasicboardv2.util.CookieUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -61,17 +62,14 @@ public class MemberApiController {
 
         Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
 
-        // JWT 토큰 생성
-        String token = tokenProvider.generateToken(member, Duration.ofHours(2));
+        // Access Token 생성 (짧은 유효기간)
+        String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
 
-        // JWT 토큰을 HttpOnly 쿠키에 저장
-        Cookie jwtCookie = new Cookie("token", token);
-        jwtCookie.setHttpOnly(true); // JavaScript로 접근 불가
-        jwtCookie.setSecure(true);   // HTTPS에서만 사용 (배포 환경에서 사용)
-        jwtCookie.setPath("/");      // 쿠키의 경로 설정 (모든 경로에서 사용)
-        jwtCookie.setMaxAge(7 * 24 * 60 * 60); // 쿠키 만료 시간 설정 (1주일)
-        response.addCookie(jwtCookie);
+        // Refresh Token 생성 (긴 유효기간)
+        String refreshToken = tokenProvider.generateToken(member, Duration.ofDays(3));
 
+        // Refresh Token을 HttpOnly 쿠키에 저장
+        CookieUtil.addCookie(response, "refreshToken", refreshToken, 7 * 24 * 60 * 60);
 
         // 토큰 반환
         return ResponseEntity.ok(
@@ -79,9 +77,11 @@ public class MemberApiController {
                         .isLoggedIn(true)
                         .message("로그인 성공")
                         .url("/")
-                        .token(token)
+                        .token(accessToken)
                         .build()
         );
     }
+
+
 
 }

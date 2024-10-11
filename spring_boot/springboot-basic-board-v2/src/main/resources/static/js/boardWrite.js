@@ -1,7 +1,7 @@
 let selectedFile = null; // 파일은 1개만 선택 가능
 
 $(document).ready(() => {
-    checkSession();
+    checkToken();
 
     // 파일 선택 시 이벤트
     $('#file').on('change', function(e) {
@@ -59,5 +59,12 @@ let updateFileList = () => {
             $('#file').val(''); // 파일 input 초기화
             updateFileList(); // 파일 목록 갱신
         });
+    }
+}
+
+let checkToken = () => {
+    let token = localStorage.getItem('accessToken');
+    if (token == null || token.trim() === '') {
+        window.location.href = "/member/login";
     }
 }

@@ -2,6 +2,7 @@ package com.example.spring.springbootbasicboardv2.controller;
 
 import com.example.spring.springbootbasicboardv2.util.SessionUtil;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +29,9 @@ public class BoardController {
         return "board-detail";
     }
 
+//    @PreAuthorize("hasRole('USER_ADMIN')")
     @GetMapping("/write")
-    public String write(HttpSession session, Model model) {
-        SessionUtil.setSession(session, model);
+    public String write(Model model) {
         return "board-write";
     }
 

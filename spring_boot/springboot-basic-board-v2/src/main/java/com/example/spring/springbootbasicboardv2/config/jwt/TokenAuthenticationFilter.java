@@ -2,7 +2,6 @@ package com.example.spring.springbootbasicboardv2.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,41 +15,37 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
-    private final UserDetailsService userDetailsService;
+    private final static String HEADER_AUTHORIZATION = "Authorization";
+    private final static String TOKEN_PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        // 로그인 경로일 경우 필터를 거치지 않고 바로 다음으로 진행
-        // 쿠키에서 JWT 토큰 추출
-        String token = getJwtFromCookies(request);
-
-        if (token != null && tokenProvider.validToken(token)) {
-            String username = tokenProvider.getUsernameFromToken(token);
-
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        String token = resolveToken(request);
+        if (token != null && tokenProvider.validToken(token) == 1) {
+            // 토큰이 유효할 경우, 인증 정보를 설정
+            Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } else if (token != null && tokenProvider.validToken(token) == 2) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return; // 더 이상 진행하지 않음
         }
-
 
         chain.doFilter(request, response);
     }
 
-    private String getJwtFromCookies(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            return Arrays.stream(request.getCookies())
-                    .filter(cookie -> "token".equals(cookie.getName()))
-                    .map(Cookie::getValue)
-                    .findFirst()
-                    .orElse(null);
+    private String resolveToken(HttpServletRequest request) {
+        // Authorization 헤더에서 JWT 토큰 추출
+        String bearerToken = request.getHeader(HEADER_AUTHORIZATION);
+
+        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(7);
         }
         return null;
     }

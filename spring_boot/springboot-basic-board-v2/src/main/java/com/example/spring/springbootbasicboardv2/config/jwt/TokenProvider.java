@@ -71,6 +71,15 @@ public class TokenProvider {
         return claims.get("id", Long.class);
     }
 
+    public String getUsernameFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
     private String makeToken(Date expire, Member member) {
         Date now = new Date();
 

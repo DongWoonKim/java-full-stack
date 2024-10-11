@@ -12,7 +12,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
 
     public void signUp(Member member) {
-        memberMapper.signUp(member);
+        memberMapper.saved(member);
     }
 
     public Member findByUserId(String userId) {

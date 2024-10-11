@@ -2,42 +2,56 @@ package com.example.spring.springbootbasicboardv2.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
+@Component
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
-    private final static String HEADER_AUTHORIZATION = "Authorization";
-    private final static String TOKEN_PREFIX = "Bearer ";
+    private final UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // 요청 헤더의 Authorization 키의 값 조회
-        String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
-        // 가져온 값에서 접두사 제거
-        String token = getAccessToken(authorizationHeader);
-        // 가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
-        if (tokenProvider.validToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
+        // 로그인 경로일 경우 필터를 거치지 않고 바로 다음으로 진행
+        // 쿠키에서 JWT 토큰 추출
+        String token = getJwtFromCookies(request);
+
+        if (token != null && tokenProvider.validToken(token)) {
+            String username = tokenProvider.getUsernameFromToken(token);
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        filterChain.doFilter(request, response);
+
+        chain.doFilter(request, response);
     }
 
-    private String getAccessToken(String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-            return authorizationHeader.substring(TOKEN_PREFIX.length());
+    private String getJwtFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            return Arrays.stream(request.getCookies())
+                    .filter(cookie -> "token".equals(cookie.getName()))
+                    .map(Cookie::getValue)
+                    .findFirst()
+                    .orElse(null);
         }
-
         return null;
     }
 }

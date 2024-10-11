@@ -11,7 +11,7 @@
         <result property="role" column="role"/>
     </resultMap>
 
-    <insert id="signUp" parameterType="com.example.spring.springbootbasicboardv2.model.Member">
+    <insert id="saved" parameterType="com.example.spring.springbootbasicboardv2.model.Member">
         INSERT INTO member (user_id, password, user_name, role)
         VALUES (#{userId}, #{password}, #{userName}, #{role});
     </insert>
@@ -34,6 +34,17 @@
         FROM
             member
         WHERE id = #{id};
+    </select>
+
+    <select id="findByUserName"
+            parameterType="String"
+            resultMap="memberResultMap">
+        SELECT
+            id, user_id, password, user_name, role
+        FROM
+            member
+        WHERE
+            user_name = #{userName}
     </select>
 
 </mapper>

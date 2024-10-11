@@ -1,15 +1,7 @@
 
 $(document).ready(() => {
-    checkSession();
     getBoards();
 });
-
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
-}
 
 let getBoards = () => {
     let currentPage = 1;

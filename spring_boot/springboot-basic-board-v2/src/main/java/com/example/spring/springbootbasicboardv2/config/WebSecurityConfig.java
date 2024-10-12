@@ -56,6 +56,7 @@ public class WebSecurityConfig {
                         )
                         .permitAll() // 인증 없이 접근 가능한 경로
                         .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
+                .logout(AbstractHttpConfigurer::disable)
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint()) // 401 처리

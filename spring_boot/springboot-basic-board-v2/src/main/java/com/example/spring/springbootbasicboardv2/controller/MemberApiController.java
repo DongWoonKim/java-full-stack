@@ -71,7 +71,6 @@ public class MemberApiController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
-        System.out.println("member 33 :: " + member);
 
         // Access Token 생성 (짧은 유효기간)
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
@@ -91,6 +90,12 @@ public class MemberApiController {
                         .token(accessToken)
                         .build()
         );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> signOut (HttpServletRequest request, HttpServletResponse response) {
+        CookieUtil.deleteCookie(request, response, "refreshToken");
+        return ResponseEntity.ok().build();
     }
 
 }

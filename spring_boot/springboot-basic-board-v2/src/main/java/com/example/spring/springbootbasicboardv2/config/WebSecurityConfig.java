@@ -86,7 +86,7 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
-            response.sendRedirect("/access-denied"); // 인증되지 않은 경우 /login 페이지로 리다이렉트
+            response.sendRedirect("/access-denied");
         };
     }
 }

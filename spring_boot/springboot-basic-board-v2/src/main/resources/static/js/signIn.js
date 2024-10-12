@@ -1,6 +1,12 @@
 
 $(document).ready(() => {
     setupAjax();
+
+    let token = localStorage.getItem('accessToken');
+    if (token !== null && token.trim() !== '') {
+        window.location.href = '/';
+    }
+
     $('#signin').click(() => {
         let userId = $('#user_id').val();
         let password = $('#password').val();

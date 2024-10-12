@@ -1,6 +1,6 @@
 package com.example.spring.springbootbasicboardv2.config;
 
-import com.example.spring.springbootbasicboardv2.config.jwt.TokenAuthenticationFilter;
+import com.example.spring.springbootbasicboardv2.config.filter.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

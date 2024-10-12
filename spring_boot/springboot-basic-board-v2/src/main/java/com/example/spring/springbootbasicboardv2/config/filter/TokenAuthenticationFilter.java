@@ -1,5 +1,6 @@
-package com.example.spring.springbootbasicboardv2.config.jwt;
+package com.example.spring.springbootbasicboardv2.config.filter;
 
+import com.example.spring.springbootbasicboardv2.config.jwt.TokenProvider;
 import com.example.spring.springbootbasicboardv2.model.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

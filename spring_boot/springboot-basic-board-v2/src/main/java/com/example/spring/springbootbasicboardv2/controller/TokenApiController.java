@@ -23,13 +23,12 @@ public class TokenApiController {
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Refresh Token");
         // 쿠키에서 Refresh Token을 추출
         String refreshToken = getRefreshTokenFromCookies(request);
 
         if (refreshToken != null && tokenProvider.validToken(refreshToken) == 1) {
-            // Refresh Token이 유효하면 새로운 Access Token을 발급
             Member member = tokenProvider.getTokenDetails(refreshToken);
+            // Refresh Token이 유효하면 새로운 Access Token을 발급
             String newAccessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
 
             // Refresh Token 생성 (긴 유효기간)

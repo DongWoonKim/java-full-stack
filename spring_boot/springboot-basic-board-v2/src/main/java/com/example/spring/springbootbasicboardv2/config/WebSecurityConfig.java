@@ -6,17 +6,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true) // 메서드 보안을 활성화
 public class WebSecurityConfig {
 
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
@@ -25,9 +29,6 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(
-                        "/refresh-token",
-                        "/member/login",
-                        "/member/join",
                         "/static/**",
                         "/css/**",
                         "/js/**"
@@ -38,8 +39,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안 함
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ) // 세션 사용 안 함
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 new AntPathRequestMatcher("/"),
@@ -48,11 +50,15 @@ public class WebSecurityConfig {
                                 new AntPathRequestMatcher("/refresh-token"),
                                 new AntPathRequestMatcher("/login"),
                                 new AntPathRequestMatcher("/logout"),
-                                new AntPathRequestMatcher("/write")
+                                new AntPathRequestMatcher("/write"),
+                                new AntPathRequestMatcher("/access-denied")
                         )
                         .permitAll() // 인증 없이 접근 가능한 경로
                         .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authenticationEntryPoint()) // 401 처리
+                        .accessDeniedHandler(accessDeniedHandler())) // 403 처리
                 .build();
     }
 
@@ -64,5 +70,20 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    // 403 에러 시 커스텀 페이지로 리다이렉트 설정
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            response.sendRedirect("/access-denied");
+        };
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.sendRedirect("/access-denied"); // 인증되지 않은 경우 /login 페이지로 리다이렉트
+        };
     }
 }

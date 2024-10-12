@@ -1,5 +1,7 @@
 package com.example.spring.springbootbasicboardv2.controller;
 
+import com.example.spring.springbootbasicboardv2.model.Member;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,21 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardController {
 
     @GetMapping("/")
-    public String boardList(Model model) {
+    public String boardList() {
         return "board-list";
     }
 
     @GetMapping("/detail")
-    public String detail(
-            @RequestParam("id") Long id,
-            Model model
-    ) {
+    public String detail(@RequestParam("id") Long id, Model model) {
         model.addAttribute("id", id);
         return "board-detail";
     }
 
     @GetMapping("/write")
-    public String write(Model model) {
+    public String write() {
         return "board-write";
     }
 

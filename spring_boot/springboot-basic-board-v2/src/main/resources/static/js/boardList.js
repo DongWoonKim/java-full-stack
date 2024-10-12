@@ -1,26 +1,18 @@
 
 $(document).ready(() => {
     checkToken();
-
-    // 모든 Ajax 요청에 JWT Access Token을 포함
-    $.ajaxSetup({
-        beforeSend: function(xhr) {
-            let token = localStorage.getItem('accessToken'); // 저장된 Access Token 가져오기
-            console.log('Access Token:', token);
-            if (token) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token); // Authorization 헤더에 Access Token 추가
-            }
-        }
+    setupAjax();
+    // getUserInfo()가 데이터를 반환하면 처리하는 부분
+    getUserInfo().then((userInfo) => {
+        // 받은 userInfo로 필요한 작업을 수행
+        $('#welcome-message').text(userInfo.userName + '님 환영합니다!');
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+    }).catch((error) => {
+        console.error('Error while fetching user info:', error);
     });
     getBoards();
 });
-
-let checkToken = () => {
-    let token = localStorage.getItem('accessToken');
-    if (token == null || token.trim() === '') {
-        window.location.href = "/member/login";
-    }
-}
 
 let getBoards = () => {
     let currentPage = 1;
@@ -54,6 +46,7 @@ let loadBoard = (page, size) => {
             size: size
         },
         success: (response) => {
+            console.log('res :: ', response)
             $('#boardContent').empty(); // 기존 게시글 내용 비우기
             if (response.boards.length <= 0) {
                 // 게시글이 없는 경우 메시지 출력
@@ -84,14 +77,14 @@ let loadBoard = (page, size) => {
             $('#prevPage').prop('disabled', page === 1);
             $('#nextPage').prop('disabled', response.last);
         },
-        error: (xhr) => {
-            if (xhr.status === 401) {
-                // Refresh Token을 통해 Access Token 재발급 요청
-                handleTokenExpiration();
-            } else {
-                // 다른 오류 처리
-                console.error('요청 오류 발생:', xhr);
-            }
+        error: (error) => {
+            console.log('board list error :: ', error);
         }
     });
+}
+
+
+
+let logout = () => {
+
 }

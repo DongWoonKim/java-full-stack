@@ -2,6 +2,17 @@ let selectedFile = null; // 파일은 1개만 선택 가능
 
 $(document).ready(() => {
     checkToken();
+    setupAjax();
+    // getUserInfo()가 데이터를 반환하면 처리하는 부분
+    getUserInfo().then((userInfo) => {
+        // 받은 userInfo로 필요한 작업을 수행
+        $('#welcome-message').text(userInfo.userName + '님 환영합니다!');
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+        $('#userId').val(userInfo.userId);
+    }).catch((error) => {
+        console.error('Error while fetching user info:', error);
+    });
 
     // 파일 선택 시 이벤트
     $('#file').on('change', function(e) {
@@ -36,12 +47,6 @@ $(document).ready(() => {
 
 });
 
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
-}
-
 // 파일 목록 업데이트 함수 (파일 하나만)
 let updateFileList = () => {
     $('#fileList').empty(); // 기존 목록 비우기
@@ -59,12 +64,5 @@ let updateFileList = () => {
             $('#file').val(''); // 파일 input 초기화
             updateFileList(); // 파일 목록 갱신
         });
-    }
-}
-
-let checkToken = () => {
-    let token = localStorage.getItem('accessToken');
-    if (token == null || token.trim() === '') {
-        window.location.href = "/member/login";
     }
 }

@@ -1,21 +1,20 @@
 package com.example.spring.springbootbasicboardv2.config.jwt;
 
+import com.example.spring.springbootbasicboardv2.model.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
@@ -29,6 +28,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String requestPath = request.getRequestURI();
+        log.info(requestPath);
         // 인증이 필요 없는 경로는 필터를 통과시킴
         if ("/refresh-token".equals(requestPath)) {
             chain.doFilter(request, response); // 필터를 건너뛰고 다음 필터로 이동
@@ -40,6 +40,10 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             // 토큰이 유효할 경우, 인증 정보를 설정
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            Member member = tokenProvider.getTokenDetails(token);
+            request.setAttribute("member", member);
+
         } else if (token != null && tokenProvider.validToken(token) == 2) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return; // 더 이상 진행하지 않음

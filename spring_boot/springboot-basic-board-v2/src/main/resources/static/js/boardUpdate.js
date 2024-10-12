@@ -41,12 +41,6 @@ $(document).ready(() => {
 
 });
 
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
-}
-
 // 파일 목록 업데이트 함수 (파일 하나만)
 let updateFileList = () => {
     $('#fileList').empty(); // 기존 목록 비우기

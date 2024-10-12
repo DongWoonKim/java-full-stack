@@ -2,16 +2,12 @@ package com.example.spring.springbootbasicboardv2.controller;
 
 import com.example.spring.springbootbasicboardv2.config.jwt.TokenProvider;
 import com.example.spring.springbootbasicboardv2.config.security.CustomUserDetails;
-import com.example.spring.springbootbasicboardv2.dto.SignInRequestDTO;
-import com.example.spring.springbootbasicboardv2.dto.SignInResponseDTO;
-import com.example.spring.springbootbasicboardv2.dto.SignUpRequestDTO;
-import com.example.spring.springbootbasicboardv2.dto.SignUpResponseDTO;
+import com.example.spring.springbootbasicboardv2.dto.*;
 import com.example.spring.springbootbasicboardv2.model.Member;
 import com.example.spring.springbootbasicboardv2.service.MemberService;
 import com.example.spring.springbootbasicboardv2.util.CookieUtil;
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +41,19 @@ public class MemberApiController {
         );
     }
 
+    @GetMapping("/user/info")
+    public ResponseEntity<UserInfoResponseDTO> getUserInfo(HttpServletRequest request) {
+        Member member = (Member) request.getAttribute("member");
+        return ResponseEntity.ok(
+                UserInfoResponseDTO.builder()
+                        .id(member.getId())
+                        .userId(member.getUserId())
+                        .userName(member.getUserName())
+                        .role(member.getRole())
+                        .build()
+        );
+    }
+
     @PostMapping("/login")
     public ResponseEntity<SignInResponseDTO> signIn(
             @RequestBody SignInRequestDTO requestDTO,
@@ -61,6 +71,7 @@ public class MemberApiController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Member member = ((CustomUserDetails) authentication.getPrincipal()).getMember();
+        System.out.println("member 33 :: " + member);
 
         // Access Token 생성 (짧은 유효기간)
         String accessToken = tokenProvider.generateToken(member, Duration.ofHours(2));

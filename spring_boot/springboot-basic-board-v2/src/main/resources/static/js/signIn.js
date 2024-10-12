@@ -1,23 +1,7 @@
 
 $(document).ready(() => {
-    checkToken();
-
-    // 모든 Ajax 요청에 JWT Access Token을 포함
-    $.ajaxSetup({
-        beforeSend: function(xhr) {
-            let token = localStorage.getItem('accessToken'); // 저장된 Access Token 가져오기
-            console.log('Access Token:', token);
-            if (token) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token); // Authorization 헤더에 Access Token 추가
-            }
-        }
-    });
-
-    console.log(localStorage.getItem('accessToken'));
-    // 토큰 검증
-
+    setupAjax();
     $('#signin').click(() => {
-
         let userId = $('#user_id').val();
         let password = $('#password').val();
 
@@ -31,8 +15,6 @@ $(document).ready(() => {
             url: '/login', // 서버의 엔드포인트 URL
             data: JSON.stringify(formData), // 데이터를 JSON 형식으로 변환
             contentType: 'application/json; charset=utf-8', // 전송 데이터의 타입
-            // data: $.param(formData), // 데이터를 URL 인코딩된 형식으로 변환
-            // contentType: 'application/x-www-form-urlencoded; charset=utf-8',
             dataType: 'json', // 서버에서 받을 데이터의 타입
             success: (response) => {
                 localStorage.setItem('accessToken', response.token);
@@ -50,14 +32,6 @@ $(document).ready(() => {
             }
 
         });
-
     });
 
 });
-
-let checkToken = () => {
-    let token = localStorage.getItem('accessToken');
-    if (token != null && token.trim() !== '') {
-        window.location.href = "/";
-    }
-}

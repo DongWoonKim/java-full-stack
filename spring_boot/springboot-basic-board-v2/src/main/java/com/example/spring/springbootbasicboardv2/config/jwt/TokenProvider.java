@@ -87,6 +87,7 @@ public class TokenProvider {
         return Member.builder()
                 .id(claims.get("id", Long.class))
                 .userId(claims.getSubject())
+                .userName(claims.get("userName", String.class))
                 .role(Role.valueOf(claims.get("role", String.class)))
                 .build();
     }
@@ -102,6 +103,7 @@ public class TokenProvider {
                 .setSubject( member.getUserId() )
                 .claim("id", member.getId())
                 .claim("role", member.getRole().name())
+                .claim("userName", member.getUserName())
                 .signWith(getSecretKey(), SignatureAlgorithm.HS512)
                 .compact();
     }

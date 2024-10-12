@@ -1,6 +1,16 @@
 $(document).ready(() => {
-    checkSession();
-    loadBoardDetail();
+    checkToken();
+    setupAjax();
+    // getUserInfo()가 데이터를 반환하면 처리하는 부분
+    getUserInfo().then((userInfo) => {
+        // 받은 userInfo로 필요한 작업을 수행
+        $('#hiddenUserId').val(userInfo.userId);
+        $('#hiddenUserName').val(userInfo.userName);
+        loadBoardDetail();
+    }).catch((error) => {
+        console.error('Error while fetching user info:', error);
+    });
+
 });
 
 let editArticle = () => {
@@ -17,8 +27,7 @@ let deleteArticle = () => {
         url: '/api/board/' + resourceId, // 실제 서버 API URL 및 삭제할 리소스 ID
         data: JSON.stringify({ filePath: filePath }), // filePath를 JSON으로 서버에 전송
         contentType: 'application/json', // JSON 형식으로 전송
-        success: function(response) {
-            console.log('res :: ', response);
+        success: (response) => {
             alert('리소스가 성공적으로 삭제되었습니다.');
             window.location.href = '/'; // 성공 후 목록 페이지로 이동
         },
@@ -27,13 +36,6 @@ let deleteArticle = () => {
             console.error('Error:', error);
         }
     });
-}
-
-let checkSession = () => {
-    let hUserId = $('#hiddenUserId').val();
-
-    if (hUserId == null || hUserId === '')
-        window.location.href = "/member/login";
 }
 
 let loadBoardDetail = () => {
@@ -51,7 +53,8 @@ let loadBoardDetail = () => {
             $('#userId').text(response.userId);
             $('#created').text(response.created);
 
-            if (hUserId != response.userId) {
+            if (hUserId !== response.userId) {
+                console.log('hihihi')
                 $('#editBtn').prop('disabled', true);
                 $('#deleteBtn').prop('disabled', true);
             }

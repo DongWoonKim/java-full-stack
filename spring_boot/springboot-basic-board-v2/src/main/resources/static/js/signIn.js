@@ -26,7 +26,6 @@ $(document).ready(() => {
            password : password
         }
 
-
         $.ajax({
             type: 'POST',
             url: '/login', // 서버의 엔드포인트 URL
@@ -42,29 +41,14 @@ $(document).ready(() => {
             },
             error: (xhr) => {
                 if (xhr.status === 401) {
-                    // Access Token이 만료되었을 때, Refresh Token으로 새로운 Access Token 요청
-                    console.log("401 Unauthorized - 토큰 만료됨");
-
                     // Refresh Token을 통해 Access Token 재발급 요청
-                    $.ajax({
-                        type: 'POST',
-                        url: '/refresh-token', // 새로운 Access Token 요청을 처리하는 엔드포인트
-                        success: (response) => {
-                            // 새로운 Access Token을 로컬스토리지에 저장
-                            localStorage.setItem('accessToken', response.token);
-
-                        },
-                        error: (error) => {
-                            console.error('Access Token 재발급 실패:', error);
-                            alert('로그인이 필요합니다. 다시 로그인해주세요.');
-                            window.location.href = '/member/login'; // 실패 시 로그인 페이지로 이동
-                        }
-                    });
+                    handleTokenExpiration();
                 } else {
                     // 다른 오류 처리
                     console.error('요청 오류 발생:', xhr);
                 }
             }
+
         });
 
     });

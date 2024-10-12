@@ -23,6 +23,7 @@ public class TokenApiController {
 
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Refresh Token");
         // 쿠키에서 Refresh Token을 추출
         String refreshToken = getRefreshTokenFromCookies(request);
 

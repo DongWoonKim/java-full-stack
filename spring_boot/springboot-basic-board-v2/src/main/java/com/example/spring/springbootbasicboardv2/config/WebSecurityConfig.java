@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @RequiredArgsConstructor
@@ -23,7 +24,14 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/member/login", "/member/join","/static/**", "/css/**", "/js/**"); // 정적 리소스 경로 무시
+                .requestMatchers(
+                        "/refresh-token",
+                        "/member/login",
+                        "/member/join",
+                        "/static/**",
+                        "/css/**",
+                        "/js/**"
+                ); // 정적 리소스 경로 무시
     }
 
     @Bean
@@ -33,7 +41,16 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안 함
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/","/write", "/logout", "/login", "/member/login", "/member/join").permitAll() // 인증 없이 접근 가능한 경로
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/"),
+                                new AntPathRequestMatcher("/member/login"),
+                                new AntPathRequestMatcher("/member/join"),
+                                new AntPathRequestMatcher("/refresh-token"),
+                                new AntPathRequestMatcher("/login"),
+                                new AntPathRequestMatcher("/logout"),
+                                new AntPathRequestMatcher("/write")
+                        )
+                        .permitAll() // 인증 없이 접근 가능한 경로
                         .anyRequest().authenticated()) // 그 외 모든 요청은 인증 필요
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
                 .build();

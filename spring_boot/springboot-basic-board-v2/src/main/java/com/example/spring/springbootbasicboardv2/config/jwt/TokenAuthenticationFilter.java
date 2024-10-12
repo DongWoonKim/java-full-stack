@@ -27,6 +27,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+        // /refresh-token 경로는 JWT 인증을 건너뛰도록 설정
+        // 요청 경로를 가져옴
+        String requestPath = request.getRequestURI();
+        if ("/refresh-token".equals(requestPath)) {
+            chain.doFilter(request, response); // 필터를 건너뛰고 다음 필터로 이동
+            return;
+        }
+
         String token = resolveToken(request);
         if (token != null && tokenProvider.validToken(token) == 1) {
             // 토큰이 유효할 경우, 인증 정보를 설정

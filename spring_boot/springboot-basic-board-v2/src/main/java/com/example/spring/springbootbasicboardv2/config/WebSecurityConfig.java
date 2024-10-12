@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                                 new AntPathRequestMatcher("/logout"),
                                 new AntPathRequestMatcher("/write"),
                                 new AntPathRequestMatcher("/detail"),
+                                new AntPathRequestMatcher("/update/*"),
                                 new AntPathRequestMatcher("/access-denied")
                         )
                         .permitAll() // 인증 없이 접근 가능한 경로

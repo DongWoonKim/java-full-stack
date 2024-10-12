@@ -49,13 +49,14 @@ public class FileService {
     }
 
     // 파일 삭제 메서드
-    public boolean deleteFile(String filePath) {
+    public void deleteFile(String filePath) {
         try {
-            Path path = Paths.get(filePath);
-            return Files.deleteIfExists(path); // 파일이 존재하면 삭제
+            if(!filePath.trim().isEmpty()) {
+                Path path = Paths.get(filePath);
+                Files.deleteIfExists(path); // 파일이 존재하면 삭제
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 }

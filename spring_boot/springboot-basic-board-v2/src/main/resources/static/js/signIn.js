@@ -25,7 +25,7 @@ $(document).ready(() => {
             success: (response) => {
                 localStorage.setItem('accessToken', response.token);
                 // 로그인 성공 시 '/' 경로로 이동
-                window.location.href = '/';
+                window.location.href = response.url;
             },
             error: (xhr) => {
                 if (xhr.status === 401) {

@@ -28,7 +28,7 @@ public class TokenApiController {
 
         if (refreshToken != null && tokenProvider.validToken(refreshToken) == 1) {
             Member member = tokenProvider.getTokenDetails(refreshToken);
-            // Refresh Token이 유효하면 새로운 Access Token을 발급
+            // Refresh Token이 유효하면 새로운  Token을 발급
             String newAccessToken = tokenProvider.generateToken(member, Duration.ofHours(2));
 
             // Refresh Token 생성 (긴 유효기간)

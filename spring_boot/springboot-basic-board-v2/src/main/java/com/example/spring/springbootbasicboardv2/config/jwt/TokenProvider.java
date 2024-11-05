@@ -43,7 +43,7 @@ public class TokenProvider {
             return 1;
         } catch (ExpiredJwtException e) {
             // 토큰이 만료된 경우
-            System.out.println("Access Token이 만료되었습니다.");
+            System.out.println("Token이 만료되었습니다.");
             return 2;
         } catch (Exception e) {
             // 복호화 과정에서 에러가 나면 유효하지 않은 토큰

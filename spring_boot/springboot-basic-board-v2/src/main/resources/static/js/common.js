@@ -13,9 +13,7 @@ let handleTokenExpiration = () => {
         },
         error: (error) => {
             alert('로그인이 필요합니다. 다시 로그인해주세요.');
-
-            // 실패 시 기본 동작
-            window.location.href = '/member/login'; // 실패 시 로그인 페이지로 이동
+            localStorage.removeItem('accessToken');
         }
     });
 }

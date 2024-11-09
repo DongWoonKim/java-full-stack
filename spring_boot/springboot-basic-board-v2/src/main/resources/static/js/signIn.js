@@ -23,6 +23,7 @@ $(document).ready(() => {
             contentType: 'application/json; charset=utf-8', // 전송 데이터의 타입
             dataType: 'json', // 서버에서 받을 데이터의 타입
             success: (response) => {
+                console.log('log in :: ', response)
                 localStorage.setItem('accessToken', response.token);
                 // 로그인 성공 시 '/' 경로로 이동
                 window.location.href = response.url;

@@ -77,8 +77,16 @@ let loadBoard = (page, size) => {
             $('#prevPage').prop('disabled', page === 1);
             $('#nextPage').prop('disabled', response.last);
         },
-        error: (error) => {
-            console.log('board list error :: ', error);
+        error: (xhr) => {
+            console.log('xhr :: ', xhr)
+            console.log('xhr :: ', xhr.status)
+            if (xhr.status === 401) {
+                // Refresh Token을 통해 Access Token 재발급 요청
+                handleTokenExpiration();
+            } else {
+                // 다른 오류 처리
+                console.error('요청 오류 발생:', xhr);
+            }
         }
     });
 }

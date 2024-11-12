@@ -49,6 +49,7 @@ public class WebSecurityConfig {
                                 new AntPathRequestMatcher("/member/join"),
                                 new AntPathRequestMatcher("/refresh-token"),
                                 new AntPathRequestMatcher("/login"),
+                                new AntPathRequestMatcher("/join"),
                                 new AntPathRequestMatcher("/logout"),
                                 new AntPathRequestMatcher("/write"),
                                 new AntPathRequestMatcher("/detail"),

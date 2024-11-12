@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class FileService {
 
     // 파일이 저장될 경로
-    private final String UPLOADED_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "하이미디어" + File.separator + "upload" + File.separator;
+    private final String UPLOADED_FOLDER = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "labs" + File.separator + "upload" + File.separator;
 
     public String fileUpload(MultipartFile file) {
 

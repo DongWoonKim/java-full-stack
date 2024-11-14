@@ -78,11 +78,11 @@ let loadBoard = (page, size) => {
             $('#nextPage').prop('disabled', response.last);
         },
         error: (xhr) => {
-            console.log('xhr :: ', xhr)
-            console.log('xhr :: ', xhr.status)
             if (xhr.status === 401) {
                 // Refresh Token을 통해 Access Token 재발급 요청
                 handleTokenExpiration();
+            } else if (xhr.status === 403) {
+                window.location.href = '/access-denied';
             } else {
                 // 다른 오류 처리
                 console.error('요청 오류 발생:', xhr);

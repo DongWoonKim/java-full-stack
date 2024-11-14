@@ -1,6 +1,8 @@
 package com.example.spring.springbootbasicboardv2.config;
 
 import com.example.spring.springbootbasicboardv2.config.filter.TokenAuthenticationFilter;
+import com.example.spring.springbootbasicboardv2.config.security.CustomAccessDeniedHandler;
+import com.example.spring.springbootbasicboardv2.config.security.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -61,8 +65,8 @@ public class WebSecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint()) // 401 처리
-                        .accessDeniedHandler(accessDeniedHandler())) // 403 처리
+                        .authenticationEntryPoint(customAuthenticationEntryPoint) // 401 처리
+                        .accessDeniedHandler(customAccessDeniedHandler)) // 403 처리
                 .build();
     }
 
